@@ -1,0 +1,101 @@
+from __future__ import print_function
+from django.conf import settings
+from django.contrib.auth import get_user_model
+from django.core.management import call_command
+from django.contrib.sites.models import Site
+from django.test import TestCase
+from django.test.utils import override_settings
+import os
+from parler import appsettings
+
+try:
+    from importlib import import_module
+except ImportError:
+    from django.utils.importlib import import_module  # Python 2.6
+
+try:
+    User = get_user_model()
+except ImportError:  # django < 1.5
+    from django.contrib.auth.models import User
+
+
+def clear_cache():
+    """
+    Clear internal cache of apps loading
+    """
+    import django
+    if django.VERSION >= (1.7):
+        try:
+            from django.db.models import loading
+            loading.cache.loaded = False
+        except ImportError:  # Django >= 1.9
+            pass
+    else:
+        from django.apps import apps
+        apps.clear_cache()
+
+
+class override_parler_settings(override_settings):
+    """
+    Make sure the parler.appsettings is also updated with override_settings()
+    """
+
+    def __init__(self, **kwargs):
+        super(override_parler_settings, self).__init__(**kwargs)
+        self.old_values = {}
+
+    def enable(self):
+        super(override_parler_settings, self).enable()
+        for key, value in self.options.items():
+            self.old_values[key] = getattr(appsettings, key)
+            setattr(appsettings, key, value)
+
+    def disable(self):
+        super(override_parler_settings, self).disable()
+        for key in self.options.keys():
+            setattr(appsettings, key, self.old_values[key])
+
+
+class AppTestCase(TestCase):
+    """
+    Tests for URL resolving.
+    """
+    user = None
+    install_apps = (
+        'parler.tests.testapp',
+    )
+
+    @classmethod
+    def setUpClass(cls):
+        super(AppTestCase, cls).setUpClass()
+
+        from django.template.loaders import app_directories  # late import, for django 1.7
+        if cls.install_apps:
+            # When running this app via `./manage.py test fluent_pages`, auto install the test app + models.
+            run_syncdb = False
+            for appname in cls.install_apps:
+                if appname not in settings.INSTALLED_APPS:
+                    print('Adding {0} to INSTALLED_APPS'.format(appname))
+                    settings.INSTALLED_APPS = (appname,) + tuple(settings.INSTALLED_APPS)
+                    run_syncdb = True
+
+                    # Flush caches
+                    testapp = import_module(appname)
+                    clear_cache()
+                    app_directories.app_template_dirs += (
+                        os.path.join(os.path.dirname(testapp.__file__), 'templates'),
+                    )
+
+            if run_syncdb:
+                call_command('syncdb', verbosity=0)  # may run south's overlaid version
+
+        # Create basic objects
+        # 1.4 does not create site automatically with the defined SITE_ID, 1.3 does.
+        Site.objects.get_or_create(id=settings.SITE_ID, defaults=dict(domain='django.localhost', name='django at localhost'))
+        cls.user, _ = User.objects.get_or_create(is_superuser=True, is_staff=True, username="admin")
+
+        # Be supportive for other project settings too.
+        cls.conf_fallbacks = list(appsettings.PARLER_LANGUAGES['default']['fallbacks'] or ['en'])
+        cls.conf_fallback = cls.conf_fallbacks[0]
+        cls.other_lang1 = next(x for x, _ in settings.LANGUAGES if x not in cls.conf_fallbacks)  # "af"
+        cls.other_lang2 = next(x for x, _ in settings.LANGUAGES if x not in cls.conf_fallbacks + [cls.other_lang1])  # "ar"

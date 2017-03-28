@@ -53,7 +53,7 @@ WSGI_APPLICATION = 'webvideosharingproject.wsgi.application'
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
 
-LANGUAGE_CODE = 'ru'
+LANGUAGE_CODE = 'en'
 
 TIME_ZONE = 'Europe/Moscow'
 
@@ -167,7 +167,7 @@ INSTALLED_APPS = (
 
 LANGUAGES = (
     ## Customize this
-    ('ru', gettext('ru')),
+    ('en', gettext('en')),
 )
 
 
@@ -203,9 +203,9 @@ CMS_PLACEHOLDER_CONF = {}
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'django_db',
-        'USER' : 'nikita',
-        'PASSWORD' : 'admin',
+        'NAME': 'academicsvideo_db',
+        'USER' : 'superuser',
+        'PASSWORD' : 'Password',
         'HOST' : '127.0.0.1',
         'PORT' : '5432',
     }

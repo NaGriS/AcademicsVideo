@@ -178,8 +178,8 @@ CMS_LANGUAGES = {
             'redirect_on_fallback': True,
             'public': True,
             'hide_untranslated': False,
-            'name': gettext('ru'),
-            'code': 'ru',
+            'name': gettext('en'),
+            'code': 'en',
         },
     ],
     'default': {

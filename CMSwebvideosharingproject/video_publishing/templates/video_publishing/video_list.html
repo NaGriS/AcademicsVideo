@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    {% for video in videos %}
+        <div>
+            <p>published: {{ video.pub_date }}</p>
+            <h1><a href="">{{ video.title }}</a></h1>
+            <iframe width="560" height="315" src="{{ video.youtube_link }}" frameborder="0" allowfullscreen></iframe>
+            <p>{{ video.description|linebreaksbr }}</p>
+        </div>
+    {% endfor %}
+</body>
+</html>

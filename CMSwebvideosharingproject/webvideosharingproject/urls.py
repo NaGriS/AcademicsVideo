@@ -21,7 +21,8 @@ urlpatterns = [
 
 urlpatterns += solid_i18n_patterns(
     url(r'^admin/', include(admin.site.urls)),  # NOQA
-    url(r'^', include('cms.urls')),
+    #url(r'^', include('cms.urls')),
+    url(r'', include('video_publishing.urls')),
 )
 
 

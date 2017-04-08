@@ -15,13 +15,16 @@ from solid_i18n.urls import solid_i18n_patterns
 admin.autodiscover()
 
 urlpatterns = [
+    url(r'^user_auth/', include('user_auth.urls')),
+#    url(r'^cmsplugin_auth_content',include('cmsplugin_auth_content.cms_plugins')),
     url(r'^sitemap\.xml$', sitemap,
-        {'sitemaps': {'cmspages': CMSSitemap}}),
+    {'sitemaps': {'cmspages': CMSSitemap}}),
 ]
 
 urlpatterns += solid_i18n_patterns(
     url(r'^admin/', include(admin.site.urls)),  # NOQA
     url(r'^', include('cms.urls')),
+
 )
 
 

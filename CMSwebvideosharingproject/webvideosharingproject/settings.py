@@ -131,6 +131,7 @@ MIDDLEWARE_CLASSES = (
 )
 
 INSTALLED_APPS = (
+    'user_auth',
     'djangocms_admin_style',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -160,7 +161,7 @@ INSTALLED_APPS = (
     'webvideosharingproject',
     'parler',
     'aldryn_bootstrap3',
-    'cmsplugin_auth_content',
+   'cmsplugin_auth_content',
     #'account',
 )
 

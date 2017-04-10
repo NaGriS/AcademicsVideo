@@ -10,13 +10,13 @@ from django.contrib.sitemaps.views import sitemap
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.views.static import serve
 from solid_i18n.urls import solid_i18n_patterns
+import registration
 
 
 admin.autodiscover()
 
 urlpatterns = [
-    url(r'^user_auth/', include('user_auth.urls')),
-#    url(r'^cmsplugin_auth_content',include('cmsplugin_auth_content.cms_plugins')),
+    url(r'^user_auth/', include('user_auth.urls',namespace='user_auth')),
     url(r'^sitemap\.xml$', sitemap,
     {'sitemaps': {'cmspages': CMSSitemap}}),
 ]
@@ -27,10 +27,6 @@ urlpatterns += solid_i18n_patterns(
 
 )
 
-
-#urlpatterns = solid_i18n_patterns("",
-#   url(r"^account/", include("account.urls")),
-#)
 
 # This is only needed when using runserver.
 if settings.DEBUG:

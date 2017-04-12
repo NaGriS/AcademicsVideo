@@ -1,6 +1,7 @@
 # Byte-compiled / optimized / DLL files
 CMSwebvideosharingproject/webvideosharingproject/__pycache__/
 *.py[cod]
+*.pyc
 *$py.class
 CMSwebvideosharingproject/.idea/
 CMSwebvideosharingproject/static/
@@ -9,6 +10,7 @@ CMSwebvideosharingproject/static/
 
 # Distribution / packaging
 .Python
+venv/
 env/
 build/
 develop-eggs/

@@ -5,6 +5,14 @@
     <title>Title</title>
 </head>
 <body>
+    <div>
+        <h1>{{ course.title }}</h1>
+        <p>Description: {{ course.description }}</p>
+        <p>Author: {{ course.author }}</p>
+    <div>
+
+    <div><a class="btn btn-default" href="{% url 'course_edit' pk=course.pk %}"><span>Edit</span></a></div>
+
     {% for video in videos %}
         <div>
             <p>published: {{ video.pub_date }}</p>

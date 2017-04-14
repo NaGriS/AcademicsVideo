@@ -5,4 +5,7 @@ urlpatterns = [
     url(r'^courses/$', views.course_list, name='course_list'),
     url(r'^courses/new/$', views.course_new, name='course_new'),
     url(r'^courses/(?P<pk>[0-9]+)/edit/$', views.course_edit, name='course_edit'),
+    url(r'^courses/(?P<pk>[0-9]+)/new/$', views.video_new, name='video_new'),
+    url(r'^courses/(?P<course_pk>[0-9]+)/(?P<video_pk>[0-9]+)/$', views.video, name='video'),
+    url(r'^courses/(?P<course_pk>[0-9]+)/(?P<video_pk>[0-9]+)/edit/$', views.video_edit, name='video_edit'),
 ]

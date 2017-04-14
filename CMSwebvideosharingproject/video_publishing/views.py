@@ -79,3 +79,23 @@ def video_edit(request, course_pk, video_pk):
     else:
         form = VideoForm(instance=video_d)
     return render(request, 'video_publishing/course_edit.html', {'form': form})
+
+def video_delete(request, course_pk, video_pk):
+    video_d = get_object_or_404(Video_Create, pk=video_pk)
+    if request.method == "POST":
+        if 'yes' in request.POST.getlist('yes'):
+            video_d.delete()
+            return redirect('video_list', pk=course_pk)
+        elif 'no' in request.POST.getlist('no'):
+            return redirect('video', course_pk=course_pk, video_pk=video_pk)
+    return render(request, 'video_publishing/video_delete.html', {'video_d': video_d})
+
+def course_delete(request, course_pk):
+    course_d = get_object_or_404(Course_Create, pk=course_pk)
+    if request.method == "POST":
+        if 'yes' in request.POST.getlist('yes'):
+            course_d.delete()
+            return redirect('course_list')
+        elif 'no' in request.POST.getlist('no'):
+            return redirect('video_list', pk=course_pk)
+    return render(request, 'video_publishing/course_delete.html', {'course_d': course_d})

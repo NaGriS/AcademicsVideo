@@ -10,7 +10,8 @@ from django.views.generic import View
 #Registration
 class UserFormView(View):
     form_class=UserForm
-    template_name = 'user_auth/registration_form.html'
+#    template_name = 'user_auth/registration_form.html'
+    template_name = 'user_auth/index.html'
 
     #display blank form
 
@@ -64,9 +65,12 @@ def login_user(request):
                 respone.write("<h1> you are in our site <h1>")
                 return respone
             else:
-                return render(request, 'user_auth/login.html', {'error_message': 'Your account has been disabled'})
+                #return render(request, 'user_auth/login.html', {'error_message': 'Your account has been disabled'})
+                return render(request, 'user_auth/index.html', {'error_message': 'Your account has been disabled'})
         else:
-            return render(request, 'user_auth/login.html', {'error_message': 'Invalid login'})
-    return render(request, 'user_auth/login.html')
+            #return render(request, 'user_auth/login.html', {'error_message': 'Invalid login'})
+            return render(request, 'user_auth/index.html', {'error_message': 'Invalid login'})
+    #return render(request, 'user_auth/login.html')
+    return render(request, 'user_auth/index.html')
 
 

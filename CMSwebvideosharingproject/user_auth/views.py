@@ -17,7 +17,8 @@ class UserFormView(View):
 
     def get(self,request):
         form=self.form_class(None)
-        return render(request,self.template_name,{'form':form})
+        #return render(request,self.template_name,{'form':form})
+        return render(request, self.template_name)
 
     def post(self,request):
         form =self.form_class(request.POST)
@@ -45,7 +46,8 @@ class UserFormView(View):
             respone.write("Your user name:" + request.POST['username'] + "</br>")
             respone.write("Your email:" + request.POST['email'] + "</br>")
             return respone
-        return render(request,self.template_name,{'form':form})
+        #return render(request,self.template_name,{'form':form})
+        return render(request, self.template_name)
 
  #login user
 def login_user(request):
@@ -66,10 +68,10 @@ def login_user(request):
                 return respone
             else:
                 #return render(request, 'user_auth/login.html', {'error_message': 'Your account has been disabled'})
-                return render(request, 'user_auth/index.html', {'error_message': 'Your account has been disabled'})
+                return render(request, 'user_auth/index.html', {'error_messages': 'Your account has been disabled'})
         else:
             #return render(request, 'user_auth/login.html', {'error_message': 'Invalid login'})
-            return render(request, 'user_auth/index.html', {'error_message': 'Invalid login'})
+            return render(request, 'user_auth/index.html', {'error_messages': 'Invalid login'})
     #return render(request, 'user_auth/login.html')
     return render(request, 'user_auth/index.html')
 

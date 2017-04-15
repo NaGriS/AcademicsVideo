@@ -24,8 +24,8 @@
         <div id="signup">
           <h1>Sign Up for Free</h1>
 
-          {% if error_message %}
-            <p><strong>{{ error_message }}</strong></p>
+          {% if error_messages %}
+            <p><strong>{{ error_messages }}</strong></p>
           {% endif %}
 
           <form role="form" action="{% url 'user_auth:register'%}"  method="post" enctype="multipart/form-data">
@@ -82,8 +82,8 @@
         <div id="login">
           <h1>Welcome Back!</h1>
 
-          {% if error_message %}
-            <p><strong>{{ error_message }}</strong></p>
+          {% if error_messages %}
+            <p><strong>{{ error_messages }}</strong></p>
           {% endif %}
 
           <form role="form" action="{% url 'user_auth:login_user'%}" method="post" enctype="multipart/form-data">

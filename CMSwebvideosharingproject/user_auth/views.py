@@ -10,15 +10,13 @@ from django.views.generic import View
 #Registration
 class UserFormView(View):
     form_class=UserForm
-#    template_name = 'user_auth/registration_form.html'
-    template_name = 'user_auth/index.html'
+    template_name = 'user_auth/registration_form.html'
 
     #display blank form
 
     def get(self,request):
         form=self.form_class(None)
-        #return render(request,self.template_name,{'form':form})
-        return render(request, self.template_name)
+        return render(request,self.template_name,{'form':form})
 
     def post(self,request):
         form =self.form_class(request.POST)
@@ -41,13 +39,8 @@ class UserFormView(View):
             if user is not None:
                 if user.is_active:
                     login(request,user)
-            respone = HttpResponse()
-            respone.write("<h1> Thanks for registering<h1></br>")
-            respone.write("Your user name:" + request.POST['username'] + "</br>")
-            respone.write("Your email:" + request.POST['email'] + "</br>")
-            return respone
-        #return render(request,self.template_name,{'form':form})
-        return render(request, self.template_name)
+            return render(request, 'user_auth/login.html',{'error_message': 'Thank for registration. Now you can login to site'})
+        return render(request,self.template_name,{'form':form})
 
  #login user
 def login_user(request):
@@ -63,16 +56,11 @@ def login_user(request):
 
                 #login sucessfull
                 login(request, user)
-                respone = HttpResponse()
-                respone.write("<h1> you are in our site <h1>")
-                return respone
+                return render(request, 'user_auth/home.html', {'error_message': 'Thank for registration'})
             else:
-                #return render(request, 'user_auth/login.html', {'error_message': 'Your account has been disabled'})
-                return render(request, 'user_auth/index.html', {'error_messages': 'Your account has been disabled'})
+                return render(request, 'user_auth/login.html', {'error_message': 'Your account has been disabled'})
         else:
-            #return render(request, 'user_auth/login.html', {'error_message': 'Invalid login'})
-            return render(request, 'user_auth/index.html', {'error_messages': 'Invalid login'})
-    #return render(request, 'user_auth/login.html')
-    return render(request, 'user_auth/index.html')
+            return render(request, 'user_auth/login.html', {'error_message': 'Invalid login'})
+    return render(request, 'user_auth/login.html')
 
 

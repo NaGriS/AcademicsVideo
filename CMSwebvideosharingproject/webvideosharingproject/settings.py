@@ -162,8 +162,8 @@ INSTALLED_APPS = (
     'webvideosharingproject',
     'parler',
     'aldryn_bootstrap3',
-   'cmsplugin_auth_content',
-    #'account',
+    'cmsplugin_auth_content',
+    'video_publishing'
 )
 
 

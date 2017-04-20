@@ -5,7 +5,7 @@ from django.http import  HttpResponse
 from django.contrib.auth import (authenticate,login)
 from .forms import UserForm
 from django.views.generic import View
-
+from django.db.models import Q
 
 #Registration
 class UserFormView(View):
@@ -56,11 +56,20 @@ def login_user(request):
 
                 #login sucessfull
                 login(request, user)
-                return render(request, 'user_auth/home.html', {'error_message': 'Thank for registration'})
+                return render(request, 'video_publishing/course_list.html', {'error_message': 'Thank for registration'})
             else:
                 return render(request, 'user_auth/login.html', {'error_message': 'Your account has been disabled'})
         else:
             return render(request, 'user_auth/login.html', {'error_message': 'Invalid login'})
     return render(request, 'user_auth/login.html')
 
+    #funtion search
+    query=request.GET.get("query")
+    if query:
+        queryset_list=queryset_list.filter(
+            Q(title__icontains=query)|
+            Q(content__icontains=query)|
+            Q(user__first_name__icontains=query)|
+            Q(user__last_name__icontains=query)
+        )
 

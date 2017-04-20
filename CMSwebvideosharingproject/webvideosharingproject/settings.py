@@ -163,7 +163,8 @@ INSTALLED_APPS = (
     'parler',
     'aldryn_bootstrap3',
     'cmsplugin_auth_content',
-    'video_publishing'
+    'video_publishing',
+
 )
 
 

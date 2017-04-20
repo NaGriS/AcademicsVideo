@@ -19,12 +19,15 @@ urlpatterns = [
     url(r'^user_auth/', include('user_auth.urls',namespace='user_auth')),
     url(r'^sitemap\.xml$', sitemap,
     {'sitemaps': {'cmspages': CMSSitemap}}),
+
 ]
 
 urlpatterns += solid_i18n_patterns(
     url(r'^admin/', include(admin.site.urls)),  # NOQA
-    url(r'^', include('cms.urls')),
-    url(r'', include('video_publishing.urls')),
+    #url(r'^', include('cms.urls')),
+    url(r'', include('video_publishing.urls', namespace='video_publishing')),
+
+
 )
 
 

@@ -27,7 +27,7 @@ def course_new(request):
                 course = form.save(commit=False)
                 course.author = request.user
                 course.save()
-                return redirect('video_list', pk=course.pk)
+                return redirect('video_publishing:video_list', pk=course.pk)
     else:
         form = CourseForm()
     return render(request, 'video_publishing/course_edit.html', {'form': form})
@@ -41,7 +41,7 @@ def course_edit(request, pk):
             course = form.save(commit=False)
             course.author = request.user
             course.save()
-            return redirect('video_list', pk=course.pk)
+            return redirect('video_publishing:video_list', pk=course.pk)
     else:
         form = CourseForm(instance=course)
     return render(request, 'video_publishing/course_edit.html', {'form': form})
@@ -55,7 +55,7 @@ def video_new(request, pk):
                 video.course_id = pk
                 video.pub_date = timezone.now()
                 video.save()
-                return redirect('video_list', pk)
+                return redirect('video_publishing:video_list', pk)
     else:
         form = VideoForm()
     return render(request, 'video_publishing/video_edit.html', {'form': form})
@@ -75,7 +75,7 @@ def video_edit(request, course_pk, video_pk):
             video_d.course_id = course_pk
             video_d.pub_date = timezone.now()
             video_d.save()
-            return redirect('video', course_pk=course_pk, video_pk=video_pk)
+            return redirect('video_publishing:video', course_pk=course_pk, video_pk=video_pk)
     else:
         form = VideoForm(instance=video_d)
     return render(request, 'video_publishing/course_edit.html', {'form': form})
@@ -85,9 +85,9 @@ def video_delete(request, course_pk, video_pk):
     if request.method == "POST":
         if 'yes' in request.POST.getlist('yes'):
             video_d.delete()
-            return redirect('video_list', pk=course_pk)
+            return redirect('video_publishing:video_list', pk=course_pk)
         elif 'no' in request.POST.getlist('no'):
-            return redirect('video', course_pk=course_pk, video_pk=video_pk)
+            return redirect('video_publishing:video', course_pk=course_pk, video_pk=video_pk)
     return render(request, 'video_publishing/video_delete.html', {'video_d': video_d})
 
 def course_delete(request, course_pk):
@@ -95,7 +95,7 @@ def course_delete(request, course_pk):
     if request.method == "POST":
         if 'yes' in request.POST.getlist('yes'):
             course_d.delete()
-            return redirect('course_list')
+            return redirect('video_publishing:course_list')
         elif 'no' in request.POST.getlist('no'):
-            return redirect('video_list', pk=course_pk)
+            return redirect('video_publishing:video_list', pk=course_pk)
     return render(request, 'video_publishing/course_delete.html', {'course_d': course_d})

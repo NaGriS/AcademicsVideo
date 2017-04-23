@@ -63,13 +63,3 @@ def login_user(request):
             return render(request, 'user_auth/login.html', {'error_message': 'Invalid login'})
     return render(request, 'user_auth/login.html')
 
-    #funtion search
-    query=request.GET.get("query")
-    if query:
-        queryset_list=queryset_list.filter(
-            Q(title__icontains=query)|
-            Q(content__icontains=query)|
-            Q(user__first_name__icontains=query)|
-            Q(user__last_name__icontains=query)
-        )
-

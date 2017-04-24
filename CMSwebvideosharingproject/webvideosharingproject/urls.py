@@ -16,7 +16,7 @@ import registration
 admin.autodiscover()
 
 urlpatterns = [
-    url(r'^user_auth/', include('user_auth.urls',namespace='user_auth')),
+    url(r'', include('user_auth.urls',namespace='user_auth')),
     url(r'^sitemap\.xml$', sitemap,
     {'sitemaps': {'cmspages': CMSSitemap}}),
 

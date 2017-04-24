@@ -1,0 +1,12 @@
+{% if user.is_authenticated %}
+    <p>{{ user.get_username }}</p>
+{% endif %}
+
+<html>
+
+<body>
+    <a href="/logout_user/">logout</a>
+
+    {% block content %} {% endblock %}
+</body>
+</html>

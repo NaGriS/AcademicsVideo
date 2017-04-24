@@ -53,7 +53,7 @@ WSGI_APPLICATION = 'webvideosharingproject.wsgi.application'
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
 
-LANGUAGE_CODE = 'ru'
+LANGUAGE_CODE = 'en'
 
 TIME_ZONE = 'Europe/Moscow'
 
@@ -131,6 +131,7 @@ MIDDLEWARE_CLASSES = (
 )
 
 INSTALLED_APPS = (
+    'user_auth',
     'djangocms_admin_style',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -140,6 +141,7 @@ INSTALLED_APPS = (
     'django.contrib.sitemaps',
     'django.contrib.staticfiles',
     'django.contrib.messages',
+    'registration',
     'cms',
     'menus',
     'sekizai',
@@ -161,13 +163,14 @@ INSTALLED_APPS = (
     'parler',
     'aldryn_bootstrap3',
     'cmsplugin_auth_content',
-    #'account',
+    'video_publishing',
+
 )
 
 
 LANGUAGES = (
     ## Customize this
-    ('ru', gettext('ru')),
+    ('en', gettext('en')),
 )
 
 
@@ -178,8 +181,8 @@ CMS_LANGUAGES = {
             'redirect_on_fallback': True,
             'public': True,
             'hide_untranslated': False,
-            'name': gettext('ru'),
-            'code': 'ru',
+            'name': gettext('en'),
+            'code': 'en',
         },
     ],
     'default': {
@@ -203,9 +206,9 @@ CMS_PLACEHOLDER_CONF = {}
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'django_db',
-        'USER' : 'nikita',
-        'PASSWORD' : 'admin',
+        'NAME': 'academicsvideo_db',
+        'USER' : 'superuser',
+        'PASSWORD' : 'Password',
         'HOST' : '127.0.0.1',
         'PORT' : '5432',
     }

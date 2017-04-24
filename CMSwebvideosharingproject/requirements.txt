@@ -13,6 +13,7 @@ django-formtools==2.0
 django-mptt==0.8.7
 django-parler==1.7
 django-polymorphic==1.0.2
+django-registration==2.2
 django-sekizai==0.10.0
 django-treebeard==4.1.0
 django-user-accounts==2.0.0

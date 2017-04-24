@@ -131,6 +131,7 @@ MIDDLEWARE_CLASSES = (
 )
 
 INSTALLED_APPS = (
+    'user_auth',
     'djangocms_admin_style',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -140,6 +141,7 @@ INSTALLED_APPS = (
     'django.contrib.sitemaps',
     'django.contrib.staticfiles',
     'django.contrib.messages',
+    'registration',
     'cms',
     'menus',
     'sekizai',
@@ -161,7 +163,8 @@ INSTALLED_APPS = (
     'parler',
     'aldryn_bootstrap3',
     'cmsplugin_auth_content',
-    #'account',
+    'video_publishing',
+
 )
 
 

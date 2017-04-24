@@ -39,6 +39,16 @@ class UserFormView(View):
             return render(request, 'user_auth/login.html',{'error_message': 'Thank for registration. Now you can login to site'})
         return render(request,self.template_name,{'form':form})
 
+
+#redirect to login page if not auth
+def redirect_to_login(request):
+
+    if request.user.is_authenticated():
+        return HttpResponseRedirect('/courses/')
+    else:
+        return HttpResponseRedirect('/login_user/')
+
+
  #login user
 def login_user(request):
 

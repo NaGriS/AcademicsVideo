@@ -13,7 +13,12 @@
     <h2>{{ video_d.title }}</h2>
     <iframe width="560" height="315" src="{{ video_d.youtube_link }}" frameborder="0" allowfullscreen></iframe>
     <p>{{ video_d.description|linebreaksbr }}</p>
-    <div><a href="{% url 'video_publishing:video_edit' course_pk=course.pk video_pk=video_d.pk %}"><span>Edit</span></a></div>
-    <div><a href="{% url 'video_publishing:video_delete' course_pk=course.pk video_pk=video_d.pk %}"><span>Delete</span></a></div>
+
+    {% for group in request.user.groups.all %}
+        {% if group.name == 'Professor' %}
+            <div><a href="{% url 'video_publishing:video_edit' course_pk=course.pk video_pk=video_d.pk %}"><span>Edit</span></a></div>
+            <div><a href="{% url 'video_publishing:video_delete' course_pk=course.pk video_pk=video_d.pk %}"><span>Delete</span></a></div>
+        {% endif %}
+    {% endfor %}
 </body>
 </html>

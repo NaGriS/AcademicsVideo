@@ -7,7 +7,7 @@ class CourseForm(forms.ModelForm):
 
     class Meta:
         model = Course_Create
-        fields = ('title', 'description',)
+        fields = ('title', 'description', 'year_of_study', 'image_of_course')
 
 
 class VideoForm(forms.ModelForm):

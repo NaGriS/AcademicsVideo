@@ -30,7 +30,7 @@
             <label>
               Username<span class="req">*</span>
             </label>
-            <input name="username" type="text"required autocomplete="off"/>
+            <input name="username" type="text" maxlength="30" minlength="3" required autocomplete="off"/>
           </div>
 
           <div class="top-row">
@@ -38,14 +38,14 @@
               <label>
                 First Name<span class="req">*</span>
               </label>
-              <input name="first_name" type="text" required autocomplete="off" />
+              <input name="first_name" type="text" maxlength="10" required autocomplete="off" />
             </div>
 
             <div class="field-wrap">
               <label>
                 Last Name<span class="req">*</span>
               </label>
-              <input name="last_name" type="text"required autocomplete="off"/>
+              <input name="last_name" type="text" maxlength="10" required autocomplete="off"/>
             </div>
           </div>
 
@@ -60,14 +60,14 @@
             <label>
               Set A Password<span class="req">*</span>
             </label>
-            <input name="password1" type="password"required autocomplete="off"/>
+            <input name="password1" type="password" minlength="6" maxlength="16" required autocomplete="off"/>
           </div>
 
             <div class="field-wrap">
             <label>
               Password confirmation<span class="req">*</span>
             </label>
-            <input name="password2" type="password"required autocomplete="off"/>
+            <input name="password2" type="password" minlength="6" maxlength="16" required autocomplete="off"/>
           </div>
 
           <button type="submit" class="button button-block"/>Get Started</button>

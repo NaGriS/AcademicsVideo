@@ -1,11 +1,10 @@
 from django.shortcuts import render,redirect
 
 # Create your views here.
-from django.http import  HttpResponse
-from django.contrib.auth import (authenticate,login)
-from .forms import UserForm
+from django.http import  HttpResponse,HttpResponseRedirect
+from django.contrib.auth import (authenticate,login,logout,get_user_model)
+from .forms import UserForm,UserLoginForm
 from django.views.generic import View
-from django.db.models import Q
 
 #Registration
 class UserFormView(View):
@@ -34,8 +33,6 @@ class UserFormView(View):
             #returns User objects if credentials are correct
             user=authenticate(username=username,password=password)
 
-
-
             if user is not None:
                 if user.is_active:
                     login(request,user)
@@ -44,22 +41,33 @@ class UserFormView(View):
 
  #login user
 def login_user(request):
-    if request.method == "POST":
-        username = request.POST['username']
-        password = request.POST['password']
 
-        # returns User objects if credentials are correct
+    form = UserLoginForm(request.POST or None)
+    if form.is_valid():
+
+        username = form.cleaned_data.get("username")
+        password = form.cleaned_data.get('password')
         user = authenticate(username=username, password=password)
 
         if user is not None:
             if user.is_active:
 
-                #login sucessfull
+                # login sucessfull
                 login(request, user)
-                return render(request, 'video_publishing/course_list.html', {'error_message': 'Thank for registration'})
+                print(user.is_active)
+                return HttpResponseRedirect('/courses/')
+
             else:
-                return render(request, 'user_auth/login.html', {'error_message': 'Your account has been disabled'})
+                return render(request, 'user_auth/login.html',{'error_message': 'Your account has been disabled'})
+
         else:
-            return render(request, 'user_auth/login.html', {'error_message': 'Invalid login'})
-    return render(request, 'user_auth/login.html')
+            return render(request, 'user_auth/login.html',{"form": form,'error_message': 'Invalid login'})
+    return render(request, "user_auth/login.html", {"form": form})
+
+
+
+def logout_view(request):
+
+    logout(request)
+    return HttpResponseRedirect('/login_user/', {'error_message': 'You need login to views your sites'})
 

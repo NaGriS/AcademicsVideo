@@ -37,7 +37,6 @@ def course_new(request):
     if not request.user.is_authenticated():
         return HttpResponseRedirect('/login_user/')
     # validate professor
-    print("asdasdasd", permission_validate(request))
     if permission_validate(request) != 1:
         return HttpResponseRedirect('/courses/')
     if request.method == "POST":

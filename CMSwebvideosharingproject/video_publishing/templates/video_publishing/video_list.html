@@ -12,14 +12,22 @@
         <h1>{{ course.title }}</h1>
         <p>Description: {{ course.description }}</p>
         <p>Author: {{ course.author }}</p>
-    <div>
+    </div>
 
-    <div><a href="{% url 'video_publishing:course_edit' pk=course.pk %}"><span>Edit</span></a></div>
-    <div><a href="{% url 'video_publishing:course_delete' course_pk=course.pk %}"><span>Delete</span></a></div>
+    {% for group in request.user.groups.all %}
+	    {% if group.name == 'Professor' %}
+            <div><a href="{% url 'video_publishing:course_edit' pk=course.pk %}"><span>Edit</span></a></div>
+            <div><a href="{% url 'video_publishing:course_delete' course_pk=course.pk %}"><span>Delete</span></a></div>
+        {% endif %}
+    {% endfor %}
 
         <h2>Videos</h2>
 
-    <div><a href="{% url 'video_publishing:video_new' course.pk%}"><span>New Video</span></a></div>
+    {% for group in request.user.groups.all %}
+	    {% if group.name == 'Professor' %}
+            <div><a href="{% url 'video_publishing:video_new' course.pk%}"><span>New Video</span></a></div>
+        {% endif %}
+    {% endfor %}
 
     {% for video in videos %}
         <div>

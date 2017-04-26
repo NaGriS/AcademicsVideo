@@ -15,6 +15,6 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='video_create',
             name='youtube_link',
-            field=models.CharField(max_length=200, validators=[video_publishing.models.validate_url]),
+            field=models.CharField(max_length=200, validators=[video_publishing.models.validate_youtube_url]),
         ),
     ]

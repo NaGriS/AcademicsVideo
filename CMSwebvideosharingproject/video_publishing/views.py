@@ -33,10 +33,12 @@ def course_list(request):
 
 
 def course_new(request):
-    # pemission to pages
+    # permission to pages
     if not request.user.is_authenticated():
         return HttpResponseRedirect('/login_user/')
-
+    # validate professor
+    if permission_validate(request) != 1:
+        return HttpResponseRedirect('/courses/')
     if request.method == "POST":
             form = CourseForm(request.POST)
             if form.is_valid():
@@ -50,9 +52,12 @@ def course_new(request):
 
 
 def course_edit(request, pk):
-    # pemission to pages
+    # permission to pages
     if not request.user.is_authenticated():
         return HttpResponseRedirect('/login_user/')
+    # validate professor
+    if permission_validate(request) != 1:
+        return HttpResponseRedirect('/courses/'+str(pk) + '/')
 
     course = get_object_or_404(Course_Create, pk=pk)
     if request.method == "POST":
@@ -71,7 +76,9 @@ def video_new(request, pk):
     # pemission to pages
     if not request.user.is_authenticated():
         return HttpResponseRedirect('/login_user/')
-
+    # validate professor
+    if permission_validate(request) != 1:
+        return HttpResponseRedirect('/courses/' + str(pk) + '/')
     if request.method == "POST":
             form = VideoForm(request.POST)
             if form.is_valid():
@@ -99,6 +106,10 @@ def video_edit(request, course_pk, video_pk):
     if not request.user.is_authenticated():
         return HttpResponseRedirect('/login_user/')
 
+    # validate professor
+    if permission_validate(request) != 1:
+        return HttpResponseRedirect('/courses/'+ str(course_pk)+'/'+str(video_pk)+'/')
+
     video_d = get_object_or_404(Video_Create, pk=video_pk)
     if request.method == "POST":
         form = VideoForm(request.POST, instance=video_d)
@@ -112,10 +123,15 @@ def video_edit(request, course_pk, video_pk):
         form = VideoForm(instance=video_d)
     return render(request, 'video_publishing/course_edit.html', {'form': form})
 
+
 def video_delete(request, course_pk, video_pk):
     # pemission to pages
     if not request.user.is_authenticated():
         return HttpResponseRedirect('/login_user/')
+
+    # validate professor
+    if permission_validate(request) != 1:
+        return HttpResponseRedirect('/courses/' + str(course_pk) + '/' + str(video_pk) + '/')
 
     video_d = get_object_or_404(Video_Create, pk=video_pk)
     if request.method == "POST":
@@ -126,10 +142,14 @@ def video_delete(request, course_pk, video_pk):
             return redirect('video_publishing:video', course_pk=course_pk, video_pk=video_pk)
     return render(request, 'video_publishing/video_delete.html', {'video_d': video_d})
 
+
 def course_delete(request, course_pk):
     # pemission to pages
     if not request.user.is_authenticated():
         return HttpResponseRedirect('/login_user/')
+    # validate professor
+    if permission_validate(request) != 1:
+        return HttpResponseRedirect('/courses/'+str(course_pk))
     course_d = get_object_or_404(Course_Create, pk=course_pk)
     if request.method == "POST":
         if 'yes' in request.POST.getlist('yes'):
@@ -138,3 +158,11 @@ def course_delete(request, course_pk):
         elif 'no' in request.POST.getlist('no'):
             return redirect('video_publishing:video_list', pk=course_pk)
     return render(request, 'video_publishing/course_delete.html', {'course_d': course_d})
+
+
+def permission_validate(request):
+    flag = 0
+    for group in request.user.groups.all():
+        if group.name == 'Professor':
+            flag = 1
+    return flag

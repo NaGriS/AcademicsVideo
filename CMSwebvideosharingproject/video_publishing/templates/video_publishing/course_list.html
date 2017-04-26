@@ -11,13 +11,17 @@
 </head>
 <body>
 
-    <div><a href="{% url 'video_publishing:course_new' %}" ><span>New Course</span></a></div>
+    {% for group in request.user.groups.all %}
+        {% if group.name == 'Professor' %}<div><a href="{% url 'video_publishing:course_new' %}" ><span>New Course</span></a></div>{% endif %}
+    {% endfor %}
 
     {% for course in courses %}
         <div>
             <h1><a href="{% url 'video_publishing:video_list' pk=course.pk %}">{{ course.title }}</a></h1>
+            <div><img width="100" src="{{ course.image_of_course }}"></div>
             <p>{{ course.description|linebreaksbr }}</p>
             <p>{{ course.author }}</p>
+            <p>Year of study {{ course.year_of_study }}</p>
         </div>
     {% endfor %}
 

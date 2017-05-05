@@ -10,11 +10,15 @@
     <title>Title</title>
 </head>
 <body>
-        <h1>Delete a {{ video_d.title }}</h1>
-        <div>Are you sure want to delete this video?</div>
-        <form method="POST" class="post-form">{% csrf_token %}
-            <button type="submit" name="yes" value="yes">Yes</button>
-            <button type="submit" name="no" value="no">No</button>
-        </form>
+  <hr />
+        <div class="container">
+          <h1>Delete a {{ video_d.title }}</h1>
+          <h4><em>Are you sure want to delete this video?</em></h4>
+          <p></p>
+          <form method="POST" class="post-form">{% csrf_token %}
+              <button class="btn btn-success" type="submit" name="yes" value="yes">Yes</button>
+              <button class="btn btn-danger" type="submit" name="no" value="no">No</button>
+          </form>
+        </div>
 </body>
 </html>

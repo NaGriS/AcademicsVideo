@@ -2,12 +2,11 @@ from django.shortcuts import render
 from .models import Course_Create
 from .models import Video_Create
 from .forms import CourseForm
-from .forms import VideoForm
+from .forms import VideoForm,CommentForm
 from django.shortcuts import redirect
 from django.utils import timezone
 from django.shortcuts import get_object_or_404
 from django.http import  HttpResponse,HttpResponseRedirect
-from django.contrib.auth.decorators import login_required,permission_required
 
 # Create your views here.
 
@@ -99,7 +98,19 @@ def video(request, course_pk, video_pk):
 
     course = get_object_or_404(Course_Create, pk=course_pk)
     video_d = get_object_or_404(Video_Create, pk=video_pk)
-    return render(request, 'video_publishing/video.html', {'video_d': video_d, 'course': course})
+
+    post = get_object_or_404(Video_Create, pk=video_pk)
+    if request.method == "POST":
+        form = CommentForm(data=request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.post = post
+            comment.author=request.user
+            comment.save()
+            return redirect('video_publishing:video', course_pk=course_pk, video_pk=video_pk)
+    else:
+        form = CommentForm()
+    return render(request, 'video_publishing/video.html', {'video_d': video_d, 'course': course,'form':form})
 
 
 def video_edit(request, course_pk, video_pk):
@@ -122,7 +133,7 @@ def video_edit(request, course_pk, video_pk):
             return redirect('video_publishing:video', course_pk=course_pk, video_pk=video_pk)
     else:
         form = VideoForm(instance=video_d)
-    return render(request, 'video_publishing/course_edit.html', {'form': form})
+    return render(request, 'video_publishing/video_edit.html', {'form': form})
 
 
 def video_delete(request, course_pk, video_pk):

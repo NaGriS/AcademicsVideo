@@ -12,28 +12,24 @@
         <hr />
         <div class="container">
           <h1>New video</h1>
-          <form method="POST" class="post-form">{% csrf_token %}
-              {{ form.as_p }}
-              <button class="btn btn-success" type="submit">Save</button>
-          </form>
+          <form method="POST" role="form" class="post-form" >
+              {% csrf_token %}
           <hr>
-          <form class="form-inline" method="post">
             <label class="sr-only" for="inlineFormInput">Title</label>
               <div class="input-group mb-2 mr-sm-2 mb-sm-0">
                 <div class="input-group-addon">Title</div>
-                <input type="text" class="form-control" id="inlineFormInputGroup1" placeholder="Type here">
+                <input name="title" type="text" class="form-control" id="inlineFormInputGroup1" placeholder="Type here">
               </div>
             <label class="sr-only" for="inlineFormInputGroup">Youtube link</label>
               <div class="input-group mb-2 mr-sm-2 mb-sm-0">
                 <div class="input-group-addon">Youtube link</div>
-                <input type="text" class="form-control" id="inlineFormInputGroup2" placeholder="Type here">
+                <input name="youtube_link" type="text" class="form-control" id="inlineFormInputGroup2" placeholder="Type here">
               </div>
-              <button type="submit" class="save btn btn-success">Save</button>
-          </form>
-          <br>
-          <form class="form-group" method="post">
+
+            <br>
             <label for="description">Description:</label>
-            <textarea class="form-control" rows="5" id="description"></textarea>
+            <textarea name="description" class="form-control" rows="5" id="description"></textarea>
+              <button type="submit" class="save btn btn-default">Save</button>
           </form>
         </div>
 </body>

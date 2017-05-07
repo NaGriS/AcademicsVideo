@@ -1,13 +1,16 @@
 from django.shortcuts import render,redirect
 
 # Create your views here.
-from django.http import  HttpResponse,HttpResponseRedirect
-from django.contrib.auth import (authenticate,login,logout,get_user_model)
+from django.http import  HttpResponseRedirect
+from django.shortcuts import get_object_or_404
+from django.contrib.auth import (authenticate,login,logout)
 from .forms import UserForm,UserLoginForm
 from django.views.generic import View
 from django.contrib import messages
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
+
+
 #Registration
 class UserFormView(View):
     form_class=UserForm
@@ -99,3 +102,4 @@ def change_password(request):
     else:
         form = PasswordChangeForm(request.user)
     return render(request, 'user_auth/change_password.html', { 'form': form  })
+

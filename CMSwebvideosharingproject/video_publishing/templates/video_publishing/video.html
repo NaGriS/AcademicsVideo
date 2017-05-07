@@ -33,6 +33,32 @@
       <div class="col-md-6">
         <p>{{ video_d.description|linebreaksbr }}</p>
       </div>
+        <hr>
+
     </div>
+
+  {% for comment in video_d.comments.all %}
+    {% if user.is_authenticated or comment.approved_comment %}
+    <div class="comment">
+        <div class="date">
+            {{ comment.created_date }}
+        </div>
+        <strong>{{ comment.author }}</strong>
+        <p>{{ comment.comment|linebreaks }}</p>
+    </div>
+    {% endif %}
+{% empty %}
+    <p>No comments here yet :(</p>
+{% endfor %}
+
+     <h1>New comment</h1>
+    <form method="POST" class="post-form" role="form">
+        {% csrf_token %}
+
+         <label for="description">New comment:</label>
+            <textarea name="comment" class="form-control" rows="5" id="comment"></textarea>
+      <button type="submit" class="save btn btn-default">Send</button>
+    </form>
+
 </body>
 </html>

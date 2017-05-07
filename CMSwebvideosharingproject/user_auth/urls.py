@@ -2,7 +2,6 @@ from django.conf.urls import url,patterns
 
 
 from . import views
-from django.contrib.auth import views as auth_views
 
 urlpatterns=[
     url(r'^$', views.redirect_to_login, name='redirect_to_login'),
@@ -10,6 +9,7 @@ urlpatterns=[
     url(r'^login_user/$', views.login_user, name='login_user'),
     url(r'^logout_user/$', views.logout_view, name='logout_user'),
     url(r'^password/$', views.change_password, name='change_password'),
+    #url(r'^courses/(?P<course_pk>[0-9]+)/(?P<video_pk>[0-9]+)/$', views.add_comment_to_post, name='add_comment_to_post'),
 
 ]
 

@@ -16,33 +16,29 @@
     <hr />
     <div class="container">
       <h1>New course</h1>
-          <form method="POST" class="form-inline">{% csrf_token %}
-              {{ form.as_p }}
-              <button type="submit" class="save btn btn-success">Save</button>
-          </form>
-          <hr>
-          <form class="form-inline" method="post">
+        <hr>
+          <form method="post" role="form" class="post-form">
+              {% csrf_token %}
             <label class="sr-only" for="inlineFormInput">Title</label>
               <div class="input-group mb-2 mr-sm-2 mb-sm-0">
                 <div class="input-group-addon">Title</div>
-                <input type="text" class="form-control" id="inlineFormInputGroup1" placeholder="Type here">
+                <input name="title" type="text" class="form-control" id="inlineFormInputGroup1" placeholder="Type here">
               </div>
             <label class="sr-only" for="inlineFormInputGroup">Years of Study</label>
               <div class="input-group mb-2 mr-sm-2 mb-sm-0">
                 <div class="input-group-addon">Years of Study</div>
-                <input type="text" class="form-control" id="inlineFormInputGroup2" placeholder="Type here">
+                <input name="year_of_study" type="text" class="form-control" id="inlineFormInputGroup2" placeholder="Type here">
               </div>
             <label class="sr-only" for="inlineFormInputGroup">Image of Course</label>
               <div class="input-group mb-2 mr-sm-2 mb-sm-0">
                 <div class="input-group-addon">Image of Course</div>
-                <input type="text" class="form-control" id="inlineFormInputGroup3" placeholder="Type here">
+                <input name="image_of_course" type="text" class="form-control" id="inlineFormInputGroup3" placeholder="Type here">
               </div>
-              <button type="submit" class="save btn btn-success">Save</button>
-          </form>
           <br>
-          <form class="form-group" method="post">
+
             <label for="description">Description:</label>
-            <textarea class="form-control" rows="5" id="description"></textarea>
+            <textarea name="description" class="form-control" rows="5" id="description"></textarea>
+              <button type="submit" class="save btn btn-default">Save</button>
           </form>
     </div>
 </body>

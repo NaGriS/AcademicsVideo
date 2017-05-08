@@ -1,10 +1,15 @@
 from django.shortcuts import render,redirect
 
 # Create your views here.
-from django.http import  HttpResponse,HttpResponseRedirect
-from django.contrib.auth import (authenticate,login,logout,get_user_model)
+from django.http import  HttpResponseRedirect
+from django.shortcuts import get_object_or_404
+from django.contrib.auth import (authenticate,login,logout)
 from .forms import UserForm,UserLoginForm
 from django.views.generic import View
+from django.contrib import messages
+from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth.forms import PasswordChangeForm
+
 
 #Registration
 class UserFormView(View):
@@ -80,4 +85,21 @@ def logout_view(request):
 
     logout(request)
     return HttpResponseRedirect('/login_user/', {'error_message': 'You need login to views your sites'})
+
+def change_password(request):
+    if not request.user.is_authenticated():
+        return HttpResponseRedirect('/login_user/')
+
+    if request.method == 'POST':
+        form = PasswordChangeForm(request.user, request.POST)
+        if form.is_valid():
+            user = form.save()
+            update_session_auth_hash(request, user)  # Important!
+            messages.success(request, 'Your password was successfully updated!')
+            return redirect('video_publishing:course_list')
+        else:
+            messages.error(request, 'Please correct the error below.')
+    else:
+        form = PasswordChangeForm(request.user)
+    return render(request, 'user_auth/change_password.html', { 'form': form  })
 

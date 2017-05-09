@@ -10,7 +10,7 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('video_publishing', '0005_publishvideo_author'),
+        ('videopublishing', '0005_publishvideo_author'),
     ]
 
     operations = [

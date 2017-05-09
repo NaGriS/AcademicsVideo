@@ -142,6 +142,8 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.messages',
     'registration',
+    'whoosh',
+    'haystack',
     'cms',
     'menus',
     'sekizai',
@@ -163,10 +165,18 @@ INSTALLED_APPS = (
     'parler',
     'aldryn_bootstrap3',
     'cmsplugin_auth_content',
-    'video_publishing',
+    'videopublishing',
 
 )
 
+WHOOSH_INDEX = os.path.join(BASE_DIR,'whoosh/')
+
+HAYSTACK_CONNECTIONS = {
+    'default': {
+      'ENGINE': 'haystack.backends.whoosh_backend.WhooshEngine',
+      'PATH': WHOOSH_INDEX,
+    },
+  }
 
 LANGUAGES = (
     ## Customize this

@@ -11,7 +11,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('video_publishing', '0006_auto_20170414_1643'),
+        ('videopublishing', '0006_auto_20170414_1643'),
     ]
 
     operations = [
@@ -32,7 +32,7 @@ class Migration(migrations.Migration):
                 ('youtube_link', models.CharField(max_length=200)),
                 ('description', models.TextField()),
                 ('pub_date', models.DateTimeField(blank=True, null=True)),
-                ('course', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='video_publishing.Course')),
+                ('course', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='videopublishing.Course')),
             ],
         ),
         migrations.RemoveField(

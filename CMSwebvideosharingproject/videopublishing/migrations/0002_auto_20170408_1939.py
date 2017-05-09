@@ -9,7 +9,7 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('video_publishing', '0001_initial'),
+        ('videopublishing', '0001_initial'),
     ]
 
     operations = [
@@ -26,7 +26,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='choice',
             name='question',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='video_publishing.PublishVideo'),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='videopublishing.PublishVideo'),
         ),
         migrations.DeleteModel(
             name='Question',

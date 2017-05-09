@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+{% include 'user_auth/logout.html' %}
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <div>
+        <h1>{{ course.title }}</h1>
+        <p>Description: {{ course.description }}</p>
+        <p>Author: {{ course.author }}</p>
+    </div>
+
+    {% for group in request.user.groups.all %}
+	    {% if group.name == 'Professor' %}
+            <div><a href="{% url 'videopublishing:course_edit' pk=course.pk %}"><span>Edit</span></a></div>
+            <div><a href="{% url 'videopublishing:course_delete' course_pk=course.pk %}"><span>Delete</span></a></div>
+        {% endif %}
+    {% endfor %}
+
+        <h2>Videos</h2>
+
+    {% for group in request.user.groups.all %}
+	    {% if group.name == 'Professor' %}
+            <div><a href="{% url 'videopublishing:video_new' course.pk%}"><span>New Video</span></a></div>
+        {% endif %}
+    {% endfor %}
+
+    {% for video in videos %}
+        <div>
+            <p>published: {{ video.pub_date }}</p>
+            <h1><a href="{% url 'videopublishing:video' course_pk=course.pk video_pk=video.pk %}">{{ video.title }}</a></h1>
+            <iframe width="560" height="315" src="{{ video.youtube_link }}" frameborder="0" allowfullscreen></iframe>
+            <p>{{ video.description|linebreaksbr }}</p>
+        </div>
+    {% endfor %}
+</body>
+</html>

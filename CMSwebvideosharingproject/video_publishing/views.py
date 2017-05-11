@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import Course_Create
+from .models import Course_Create,Comment
 from .models import Video_Create
 from .forms import CourseForm
 from .forms import VideoForm,CommentForm
@@ -18,6 +18,7 @@ def video_list(request, pk):
 
     course = Course_Create.objects.get(id__exact=pk)
     videos = Video_Create.objects.filter(course__exact=pk).order_by('id')
+
     return render(request, 'video_publishing/video_list.html', {'videos': videos, 'course': course})
 
 
@@ -28,6 +29,8 @@ def course_list(request):
         return HttpResponseRedirect('/login_user/')
 
     courses = Course_Create.objects.all().order_by('id')
+
+
     return render(request, 'video_publishing/course_list.html', {'courses': courses})
 
 
@@ -99,14 +102,24 @@ def video(request, course_pk, video_pk):
     course = get_object_or_404(Course_Create, pk=course_pk)
     video_d = get_object_or_404(Video_Create, pk=video_pk)
 
+    #comment
+    #if 'q' in request.get:
+     #   comment_d=get_object_or_404(Comment,pk=request.get['q'])
     post = get_object_or_404(Video_Create, pk=video_pk)
     if request.method == "POST":
-        form = CommentForm(data=request.POST)
-        if form.is_valid():
-            comment = form.save(commit=False)
-            comment.post = post
-            comment.author=request.user
-            comment.save()
+        if 'send' in request.POST.getlist('send'):
+            form = CommentForm(data=request.POST)
+            if form.is_valid():
+                comment = form.save(commit=False)
+                comment.post = post
+                comment.author=request.user
+                comment.save()
+                return redirect('video_publishing:video', course_pk=course_pk, video_pk=video_pk)
+        elif 'delete' in request.POST.getlist('delete'):
+            #comment_d.delete()
+            comment_id=int(request.POST.get('comment_id'))
+            comment=Comment.objects.get(id=comment_id)
+            comment.delete()
             return redirect('video_publishing:video', course_pk=course_pk, video_pk=video_pk)
     else:
         form = CommentForm()
@@ -131,6 +144,7 @@ def video_edit(request, course_pk, video_pk):
             video_d.pub_date = timezone.now()
             video_d.save()
             return redirect('video_publishing:video', course_pk=course_pk, video_pk=video_pk)
+
     else:
         form = VideoForm(instance=video_d)
     return render(request, 'video_publishing/video_edit.html', {'form': form})
@@ -178,3 +192,12 @@ def permission_validate(request):
         if group.name == 'Professor':
             flag = 1
     return flag
+
+def video_search(request):
+    queryset_list=Video_Create.objects.activate()
+    if request.user.is_staff or request.user.is_superuser:
+        queryset_list=Video_Create.objects.all()
+
+    query=request.GET.get("q")
+    if query:
+        queryset_list=queryset_list.filter(title_icontains=query)

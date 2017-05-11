@@ -37,15 +37,29 @@
 
     </div>
 
-  {% for comment in video_d.comments.all %}
+<h1>Comments:</h1>
+
+  {% for comment in  video_d.comments.all %}
+    <form method="post">
+        {% csrf_token %}
     {% if user.is_authenticated or comment.approved_comment %}
     <div class="comment">
         <div class="date">
             {{ comment.created_date }}
+            {{course.author}}
+            {{user.get_username}}
         </div>
         <strong>{{ comment.author }}</strong>
+            <input type="hidden" name="comment_id" value="{{comment.id}}">
+
+            {% if  user.get_username == comment.author  or  user.get_username == course.author.username  %}
+            <button name="delete" value="delete" type="submit" class="save btn btn-default">delete</button>
+            {%endif%}
+
         <p>{{ comment.comment|linebreaks }}</p>
     </div>
+    </form>
+
     {% endif %}
 {% empty %}
     <p>No comments here yet :(</p>
@@ -57,7 +71,7 @@
 
          <label for="description">New comment:</label>
             <textarea name="comment" class="form-control" rows="5" id="comment"></textarea>
-      <button type="submit" class="save btn btn-default">Send</button>
+      <button name="send" value="send" type="submit" class="save btn btn-default">Send</button>
     </form>
 
 </body>

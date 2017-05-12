@@ -9,7 +9,7 @@ class VideocreateIndex(indexes.SearchIndex, indexes.Indexable):
      #description = indexes.TextField()
      #description = indexes.TextField(model_attr='description')
      
-     #content_auto = indexes.EdgeNgramField(model_attr='title')
+     content_auto = indexes.EdgeNgramField(model_attr='title')
      
      def get_model(self):
           return Videocreate

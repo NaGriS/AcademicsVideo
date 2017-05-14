@@ -1,6 +1,6 @@
 from django import forms
 from .models import Course_Create
-from .models import Videocreate,Comment
+from .models import Video_Create,Comment
 
 
 class CourseForm(forms.ModelForm):
@@ -16,7 +16,7 @@ class CourseForm(forms.ModelForm):
 class VideoForm(forms.ModelForm):
 
     class Meta:
-        model = Videocreate
+        model = Video_Create
         fields = ('title', 'youtube_link', 'description',)
 
 class CommentForm(forms.ModelForm):
@@ -24,8 +24,3 @@ class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment
         fields = ('comment',)
-        
-#class NotesSearchForm(SearchForm):
-
-   # def no_query_found(self):
-      #  return self.searchqueryset.all()

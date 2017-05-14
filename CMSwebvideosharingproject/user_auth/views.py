@@ -96,7 +96,7 @@ def change_password(request):
             user = form.save()
             update_session_auth_hash(request, user)  # Important!
             messages.success(request, 'Your password was successfully updated!')
-            return redirect('videopublishing:course_list')
+            return redirect('video_publishing:course_list')
         else:
             messages.error(request, 'Please correct the error below.')
     else:

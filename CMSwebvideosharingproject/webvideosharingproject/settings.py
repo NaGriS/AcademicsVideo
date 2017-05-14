@@ -163,20 +163,9 @@ INSTALLED_APPS = (
     'parler',
     'aldryn_bootstrap3',
     'cmsplugin_auth_content',
-    'videopublishing',
-    'whoosh',
-    'haystack',
+    'video_publishing',
+
 )
-
-WHOOSH_INDEX = os.path.join(BASE_DIR,'whoosh/')
-
-HAYSTACK_CONNECTIONS = {
-    'default': {
-      'ENGINE': 'haystack.backends.whoosh_backend.WhooshEngine',
-      'PATH': WHOOSH_INDEX,
-    },
-  }
-
 
 if DEBUG:
     EMAIL_HOST = 'localhost'

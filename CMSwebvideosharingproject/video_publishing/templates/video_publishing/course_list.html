@@ -39,7 +39,7 @@
       <!-- {% for group in request.user.groups.all %}
           {% if group.name == 'Professor' %}
             <div class="row">
-              <a class="btn btn-primary" href="{% url 'videopublishing:course_new' %}">New Course</a>
+              <a class="btn btn-primary" href="{% url 'video_publishing:course_new' %}">New Course</a>
             </div>
           {% endif %}
       {% endfor %} -->
@@ -49,7 +49,7 @@
       {% for course in courses %}
                 <div class="col-md-4">
                   <h1>
-                    <a class="courseTitle" href="{% url 'videopublishing:video_list' pk=course.pk %}">{{ course.title }}</a>
+                    <a class="courseTitle" href="{% url 'video_publishing:video_list' pk=course.pk %}">{{ course.title }}</a>
                   </h1>
                   <img class="responsive" width="350" height="200" src="{{ course.image_of_course }}">
                   <p class="description">{{ course.description|linebreaksbr }}</p>

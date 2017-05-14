@@ -131,6 +131,7 @@ MIDDLEWARE_CLASSES = (
 )
 
 INSTALLED_APPS = (
+    'user_auth',
     'djangocms_admin_style',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -140,6 +141,7 @@ INSTALLED_APPS = (
     'django.contrib.sitemaps',
     'django.contrib.staticfiles',
     'django.contrib.messages',
+    'registration',
     'cms',
     'menus',
     'sekizai',
@@ -161,9 +163,17 @@ INSTALLED_APPS = (
     'parler',
     'aldryn_bootstrap3',
     'cmsplugin_auth_content',
-    #'account',
+    'video_publishing',
+
 )
 
+if DEBUG:
+    EMAIL_HOST = 'localhost'
+    EMAIL_PORT = 1025
+    EMAIL_HOST_USER = ''
+    EMAIL_HOST_PASSWORD = ''
+    EMAIL_USE_TLS = False
+    DEFAULT_FROM_EMAIL = 'testing@example.com'
 
 LANGUAGES = (
     ## Customize this
@@ -197,6 +207,7 @@ CMS_TEMPLATES = (
 )
 
 CMS_PERMISSION = True
+
 
 CMS_PLACEHOLDER_CONF = {}
 

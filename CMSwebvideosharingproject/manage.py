@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!~/AcademicsVideo-development-Nikita/academicsvideo_env python
 import os
 import sys
 

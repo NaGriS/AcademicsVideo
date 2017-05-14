@@ -1,0 +1,27 @@
+.courseAuthor {
+  text-transform: capitalize;
+}
+.year_of_study i{
+  color: green;
+}
+.courseTitle:link, .courseTitle:visited {
+  text-decoration: none;
+  color: green;
+  text-align: center;
+}
+.courseTitle:hover, courseTitle:active {
+  color: gray;
+}
+.description {
+  text-align: justify;
+}
+.navbar-inverse .navbar-nav>li>a {
+  color: #fff !important;
+  margin-right: 5px;
+}
+body {
+  background-image: url('../../static/img/bg.png');
+}
+.input-group {
+  padding-right: 60px;
+}

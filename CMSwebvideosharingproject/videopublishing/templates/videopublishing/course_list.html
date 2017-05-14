@@ -8,22 +8,56 @@
 <head>
     <meta charset="UTF-8">
     <title>Courses</title>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+	<link rel="stylesheet" type="text/css" href="/static/css/style.css">
+  <link rel="stylesheet" type="text/css" href="/static/css/bootstrap.css">
+  <link rel="stylesheet" type="text/css" href="/static/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="/static/css/bootstrap.theme.css">
 </head>
+
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+
+
 <body>
-
-    {% for group in request.user.groups.all %}
-        {% if group.name == 'Professor' %}<div><a href="{% url 'videopublishing:course_new' %}" ><span>New Course</span></a></div>{% endif %}
-    {% endfor %}
-
-    {% for course in courses %}
-        <div>
-            <h1><a href="{% url 'videopublishing:video_list' pk=course.pk %}">{{ course.title }}</a></h1>
-            <div><img width="100" src="{{ course.image_of_course }}"></div>
-            <p>{{ course.description|linebreaksbr }}</p>
-            <p>{{ course.author }}</p>
-            <p>Year of study {{ course.year_of_study }}</p>
-        </div>
-    {% endfor %}
-
+  <div class="container">
+    <div class="row">
+      <!-- {% for group in request.user.groups.all %}
+          {% if group.name == 'Professor' %}
+            <div class="row">
+              <a class="btn btn-primary" href="{% url 'videopublishing:course_new' %}">New Course</a>
+            </div>
+          {% endif %}
+      {% endfor %} -->
+    </div>
+    <hr />
+    <div class="row">
+      {% for course in courses %}
+                <div class="col-md-4">
+                  <h1>
+                    <a class="courseTitle" href="{% url 'videopublishing:video_list' pk=course.pk %}">{{ course.title }}</a>
+                  </h1>
+                  <img class="responsive" width="350" height="200" src="{{ course.image_of_course }}">
+                  <p class="description">{{ course.description|linebreaksbr }}</p>
+                  <p class="courseAuthor"><span class="glyphicon glyphicon-user"></span> {{ course.author }}</p>
+                  <p class="year_of_study"><strong>Year of study</strong> <i>{{ course.year_of_study }}</i></p>
+                </div>
+      {% endfor %}
+    </div>
+  </div>
 </body>
 </html>

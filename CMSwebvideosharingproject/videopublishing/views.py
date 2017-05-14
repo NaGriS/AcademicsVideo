@@ -2,13 +2,11 @@ from django.shortcuts import render
 from .models import Course_Create
 from .models import Videocreate
 from .forms import CourseForm
-from .forms import VideoForm
+from .forms import VideoForm,CommentForm
 from django.shortcuts import redirect
 from django.utils import timezone
 from django.shortcuts import get_object_or_404
 from django.http import  HttpResponse,HttpResponseRedirect
-from django.contrib.auth.decorators import login_required,permission_required
-from haystack.query import SearchQuerySet
 
 # Create your views here.
 
@@ -59,6 +57,10 @@ def course_edit(request, pk):
     # validate professor
     if permission_validate(request) != 1:
         return HttpResponseRedirect('/courses/'+str(pk) + '/')
+    course_d = get_object_or_404(Course_Create, pk=pk)
+    # validate author
+    if permission_validate_del_edit(request, course_d.author) != 1:
+        return HttpResponseRedirect('/courses/' + str(pk) + '/')
 
     course = get_object_or_404(Course_Create, pk=pk)
     if request.method == "POST":
@@ -80,6 +82,10 @@ def video_new(request, pk):
     # validate professor
     if permission_validate(request) != 1:
         return HttpResponseRedirect('/courses/' + str(pk) + '/')
+    course_d = get_object_or_404(Course_Create, pk=pk)
+    # validate author
+    if permission_validate_del_edit(request, course_d.author) != 1:
+        return HttpResponseRedirect('/courses/' + str(pk) + '/')
     if request.method == "POST":
             form = VideoForm(request.POST)
             if form.is_valid():
@@ -99,7 +105,19 @@ def video(request, course_pk, video_pk):
 
     course = get_object_or_404(Course_Create, pk=course_pk)
     video_d = get_object_or_404(Videocreate, pk=video_pk)
-    return render(request, 'videopublishing/video.html', {'video_d': video_d, 'course': course})
+
+    post = get_object_or_404(Videocreate, pk=video_pk)
+    if request.method == "POST":
+        form = CommentForm(data=request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.post = post
+            comment.author=request.user
+            comment.save()
+            return redirect('videopublishing:video', course_pk=course_pk, video_pk=video_pk)
+    else:
+        form = CommentForm()
+    return render(request, 'videopublishing/video.html', {'video_d': video_d, 'course': course,'form':form})
 
 
 def video_edit(request, course_pk, video_pk):
@@ -110,6 +128,10 @@ def video_edit(request, course_pk, video_pk):
     # validate professor
     if permission_validate(request) != 1:
         return HttpResponseRedirect('/courses/'+ str(course_pk)+'/'+str(video_pk)+'/')
+    course_d = get_object_or_404(Course_Create, pk=course_pk)
+    # validate author
+    if permission_validate_del_edit(request, course_d.author) != 1:
+        return HttpResponseRedirect('/courses/' + str(course_pk) + '/' + str(video_pk) + '/')
 
     video_d = get_object_or_404(Videocreate, pk=video_pk)
     if request.method == "POST":
@@ -122,7 +144,7 @@ def video_edit(request, course_pk, video_pk):
             return redirect('videopublishing:video', course_pk=course_pk, video_pk=video_pk)
     else:
         form = VideoForm(instance=video_d)
-    return render(request, 'videopublishing/course_edit.html', {'form': form})
+    return render(request, 'videopublishing/video_edit.html', {'form': form})
 
 
 def video_delete(request, course_pk, video_pk):
@@ -133,7 +155,10 @@ def video_delete(request, course_pk, video_pk):
     # validate professor
     if permission_validate(request) != 1:
         return HttpResponseRedirect('/courses/' + str(course_pk) + '/' + str(video_pk) + '/')
-
+    course_d = get_object_or_404(Course_Create, pk=course_pk)
+    # validate author
+    if permission_validate_del_edit(request, course_d.author) != 1:
+        return HttpResponseRedirect('/courses/' + str(course_pk) + '/' + str(video_pk) + '/')
     video_d = get_object_or_404(Videocreate, pk=video_pk)
     if request.method == "POST":
         if 'yes' in request.POST.getlist('yes'):
@@ -152,6 +177,9 @@ def course_delete(request, course_pk):
     if permission_validate(request) != 1:
         return HttpResponseRedirect('/courses/'+str(course_pk))
     course_d = get_object_or_404(Course_Create, pk=course_pk)
+    # validate author
+    if permission_validate_del_edit(request, course_d.author) != 1:
+        return HttpResponseRedirect('/courses/'+str(course_pk))
     if request.method == "POST":
         if 'yes' in request.POST.getlist('yes'):
             course_d.delete()
@@ -165,6 +193,14 @@ def permission_validate(request):
     flag = 0
     for group in request.user.groups.all():
         if group.name == 'Professor':
+            flag = 1
+    return flag
+
+
+def permission_validate_del_edit(request, author):
+    flag = 0
+    for group in request.user.groups.all():
+        if (group.name == 'Professor') and (str(request.user.username) == str(author)):
             flag = 1
     return flag
 

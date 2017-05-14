@@ -1,12 +1,54 @@
-{% if user.is_authenticated %}
-    <p>{{ user.get_username }}</p>
-{% endif %}
-
+<!DOCTYPE html>
 <html>
+<head>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/bootstrap.theme.css">
+</head>
+
+
 
 <body>
-    <a href="/logout_user/">logout</a>
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          {% if user.is_authenticated %}
+            <a href="#Welcome-Fazil" class="navbar-brand" style="text-transform: capitalize;">Welcome {{ user.get_username }}</a>
+          {% endif %}
+        </div>
 
-    {% block content %} {% endblock %}
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          {% block content %} {% endblock %}
+          <ul class="nav navbar-nav navbar-right">
+            <li>
+              <a href="/" class="btn btn-info">Course list</a>
+            </li>
+            <li>
+              {% for group in request.user.groups.all %}
+                  {% if group.name == 'Professor' %}
+                      <a class="btn btn-primary" href="{% url 'videopublishing:course_new' %}">New Course</a>
+                  {% endif %}
+              {% endfor %}
+            </li>
+            <li>
+              <a href="/logout_user/" class="btn btn-danger">logout</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
 </body>
+<br>
+<br>
+<br>
+ <div class="form-group text-center">
+     <span><a href="{% url 'user_auth:change_password' %}">change password</a> </span>
+ </div>
 </html>

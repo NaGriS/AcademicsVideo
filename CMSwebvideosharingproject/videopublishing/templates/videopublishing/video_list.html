@@ -25,16 +25,16 @@
   <div class="container">
     {% for group in request.user.groups.all %}
       {% if group.name == 'Professor' and request.user == course.author%}
-                <a class="btn btn-info" href="{% url 'video_publishing:course_edit' pk=course.pk %}">Edit</a>
+                <a class="btn btn-info" href="{% url 'videopublishing:course_edit' pk=course.pk %}">Edit</a>
 
-                <a class="btn btn-danger" href="{% url 'video_publishing:course_delete' course_pk=course.pk %}">Delete</a>
+                <a class="btn btn-danger" href="{% url 'videopublishing:course_delete' course_pk=course.pk %}">Delete</a>
         {% endif %}
     {% endfor %}
 
     {% for group in request.user.groups.all %}
       {% if group.name == 'Professor' and request.user == course.author%}
 
-              <a class="btn btn-primary" href="{% url 'video_publishing:video_new' course.pk%}">New Video</a>
+              <a class="btn btn-primary" href="{% url 'videopublishing:video_new' course.pk%}">New Video</a>
 
         {% endif %}
     {% endfor %}
@@ -54,7 +54,7 @@
     <hr>
         <div class="container">
             <h1>
-              <a class="courseTitle" href="{% url 'video_publishing:video' course_pk=course.pk video_pk=video.pk %}">{{ video.title }}</a>
+              <a class="courseTitle" href="{% url 'videopublishing:video' course_pk=course.pk video_pk=video.pk %}">{{ video.title }}</a>
             </h1>
             <div class="col-md-6">
               <iframe width="560" height="315" src="{{ video.youtube_link }}" frameborder="0" allowfullscreen></iframe>

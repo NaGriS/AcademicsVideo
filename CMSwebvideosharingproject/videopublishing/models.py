@@ -34,7 +34,7 @@ def validate_youtube_url(value):
     return value
 
 
-class Video_Create(models.Model):
+class Videocreate(models.Model):
     course = models.ForeignKey(Course_Create)
     title = models.CharField(max_length=200)
     youtube_link = models.CharField(max_length=200, validators=[validate_youtube_url])
@@ -52,7 +52,7 @@ class Video_Create(models.Model):
         return self.comments.filter(approved_comment=True)
 
 class Comment(models.Model):
-    post = models.ForeignKey(Video_Create, related_name='comments')
+    post = models.ForeignKey(Videocreate, related_name='comments')
     author = models.CharField(max_length=200)
     comment = models.TextField()
     created_date = models.DateTimeField(default=timezone.now)

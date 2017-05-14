@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from .models import Course_Create
-from .models import Video_Create
+from .models import Videocreate
 from .forms import CourseForm
 from .forms import VideoForm,CommentForm
 from django.shortcuts import redirect
@@ -17,8 +17,8 @@ def video_list(request, pk):
         return HttpResponseRedirect('/login_user/')
 
     course = Course_Create.objects.get(id__exact=pk)
-    videos = Video_Create.objects.filter(course__exact=pk).order_by('id')
-    return render(request, 'video_publishing/video_list.html', {'videos': videos, 'course': course})
+    videos = Videocreate.objects.filter(course__exact=pk).order_by('id')
+    return render(request, 'videopublishing/video_list.html', {'videos': videos, 'course': course})
 
 
 def course_list(request):
@@ -28,7 +28,7 @@ def course_list(request):
         return HttpResponseRedirect('/login_user/')
 
     courses = Course_Create.objects.all().order_by('id')
-    return render(request, 'video_publishing/course_list.html', {'courses': courses})
+    return render(request, 'videopublishing/course_list.html', {'courses': courses})
 
 
 def course_new(request):
@@ -44,10 +44,10 @@ def course_new(request):
                 course = form.save(commit=False)
                 course.author = request.user
                 course.save()
-                return redirect('video_publishing:video_list', pk=course.pk)
+                return redirect('videopublishing:video_list', pk=course.pk)
     else:
         form = CourseForm()
-    return render(request, 'video_publishing/course_edit.html', {'form': form})
+    return render(request, 'videopublishing/course_edit.html', {'form': form})
 
 
 def course_edit(request, pk):
@@ -69,10 +69,10 @@ def course_edit(request, pk):
             course = form.save(commit=False)
             course.author = request.user
             course.save()
-            return redirect('video_publishing:video_list', pk=course.pk)
+            return redirect('videopublishing:video_list', pk=course.pk)
     else:
         form = CourseForm(instance=course)
-    return render(request, 'video_publishing/course_edit.html', {'form': form})
+    return render(request, 'videopublishing/course_edit.html', {'form': form})
 
 
 def video_new(request, pk):
@@ -93,10 +93,10 @@ def video_new(request, pk):
                 video.course_id = pk
                 video.pub_date = timezone.now()
                 video.save()
-                return redirect('video_publishing:video_list', pk)
+                return redirect('videopublishing:video_list', pk)
     else:
         form = VideoForm()
-    return render(request, 'video_publishing/video_edit.html', {'form': form})
+    return render(request, 'videopublishing/video_edit.html', {'form': form})
 
 def video(request, course_pk, video_pk):
     # pemission to pages
@@ -104,9 +104,9 @@ def video(request, course_pk, video_pk):
         return HttpResponseRedirect('/login_user/')
 
     course = get_object_or_404(Course_Create, pk=course_pk)
-    video_d = get_object_or_404(Video_Create, pk=video_pk)
+    video_d = get_object_or_404(Videocreate, pk=video_pk)
 
-    post = get_object_or_404(Video_Create, pk=video_pk)
+    post = get_object_or_404(Videocreate, pk=video_pk)
     if request.method == "POST":
         form = CommentForm(data=request.POST)
         if form.is_valid():
@@ -114,10 +114,10 @@ def video(request, course_pk, video_pk):
             comment.post = post
             comment.author=request.user
             comment.save()
-            return redirect('video_publishing:video', course_pk=course_pk, video_pk=video_pk)
+            return redirect('videopublishing:video', course_pk=course_pk, video_pk=video_pk)
     else:
         form = CommentForm()
-    return render(request, 'video_publishing/video.html', {'video_d': video_d, 'course': course,'form':form})
+    return render(request, 'videopublishing/video.html', {'video_d': video_d, 'course': course,'form':form})
 
 
 def video_edit(request, course_pk, video_pk):
@@ -133,7 +133,7 @@ def video_edit(request, course_pk, video_pk):
     if permission_validate_del_edit(request, course_d.author) != 1:
         return HttpResponseRedirect('/courses/' + str(course_pk) + '/' + str(video_pk) + '/')
 
-    video_d = get_object_or_404(Video_Create, pk=video_pk)
+    video_d = get_object_or_404(Videocreate, pk=video_pk)
     if request.method == "POST":
         form = VideoForm(request.POST, instance=video_d)
         if form.is_valid():
@@ -141,10 +141,10 @@ def video_edit(request, course_pk, video_pk):
             video_d.course_id = course_pk
             video_d.pub_date = timezone.now()
             video_d.save()
-            return redirect('video_publishing:video', course_pk=course_pk, video_pk=video_pk)
+            return redirect('videopublishing:video', course_pk=course_pk, video_pk=video_pk)
     else:
         form = VideoForm(instance=video_d)
-    return render(request, 'video_publishing/video_edit.html', {'form': form})
+    return render(request, 'videopublishing/video_edit.html', {'form': form})
 
 
 def video_delete(request, course_pk, video_pk):
@@ -159,14 +159,14 @@ def video_delete(request, course_pk, video_pk):
     # validate author
     if permission_validate_del_edit(request, course_d.author) != 1:
         return HttpResponseRedirect('/courses/' + str(course_pk) + '/' + str(video_pk) + '/')
-    video_d = get_object_or_404(Video_Create, pk=video_pk)
+    video_d = get_object_or_404(Videocreate, pk=video_pk)
     if request.method == "POST":
         if 'yes' in request.POST.getlist('yes'):
             video_d.delete()
-            return redirect('video_publishing:video_list', pk=course_pk)
+            return redirect('videopublishing:video_list', pk=course_pk)
         elif 'no' in request.POST.getlist('no'):
-            return redirect('video_publishing:video', course_pk=course_pk, video_pk=video_pk)
-    return render(request, 'video_publishing/video_delete.html', {'video_d': video_d})
+            return redirect('videopublishing:video', course_pk=course_pk, video_pk=video_pk)
+    return render(request, 'videopublishing/video_delete.html', {'video_d': video_d})
 
 
 def course_delete(request, course_pk):
@@ -183,10 +183,10 @@ def course_delete(request, course_pk):
     if request.method == "POST":
         if 'yes' in request.POST.getlist('yes'):
             course_d.delete()
-            return redirect('video_publishing:course_list')
+            return redirect('videopublishing:course_list')
         elif 'no' in request.POST.getlist('no'):
-            return redirect('video_publishing:video_list', pk=course_pk)
-    return render(request, 'video_publishing/course_delete.html', {'course_d': course_d})
+            return redirect('videopublishing:video_list', pk=course_pk)
+    return render(request, 'videopublishing/course_delete.html', {'course_d': course_d})
 
 
 def permission_validate(request):
@@ -203,3 +203,14 @@ def permission_validate_del_edit(request, author):
         if (group.name == 'Professor') and (str(request.user.username) == str(author)):
             flag = 1
     return flag
+
+#def search_titles(request):
+    #video = SearchQuerySet().autocomplete(content_auto=request.POST.get('search_text',''))
+    #return render_to_response('ajax_search.hlml',{'video' : video})
+    #if request.method == "POST":
+    #    search_text = request.POST['search_text']
+    #else:
+    #    search_text = ''
+    #articles = Article.object.filter(title__contains=search_text)
+    #articles = SearchQuerySet().autocomplete(content_auto=request.POST.get('search_text',''))    
+    #return render_to_response('ajax_search.hlml',{'articles' : articles})

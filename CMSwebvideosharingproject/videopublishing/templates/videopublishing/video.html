@@ -15,9 +15,9 @@
         {% for group in request.user.groups.all %}
             {% if group.name == 'Professor' and request.user == course.author%}
                 <div>
-                  <a class="btn btn-info" href="{% url 'video_publishing:video_edit' course_pk=course.pk video_pk=video_d.pk %}">Edit</a>
+                  <a class="btn btn-info" href="{% url 'videopublishing:video_edit' course_pk=course.pk video_pk=video_d.pk %}">Edit</a>
 
-                  <a class="btn btn-danger" href="{% url 'video_publishing:video_delete' course_pk=course.pk video_pk=video_d.pk %}">Delete</a>
+                  <a class="btn btn-danger" href="{% url 'videopublishing:video_delete' course_pk=course.pk video_pk=video_d.pk %}">Delete</a>
                 </div>
             {% endif %}
         {% endfor %}

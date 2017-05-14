@@ -33,7 +33,7 @@
             <li>
               {% for group in request.user.groups.all %}
                   {% if group.name == 'Professor' %}
-                      <a class="btn btn-primary" href="{% url 'video_publishing:course_new' %}">New Course</a>
+                      <a class="btn btn-primary" href="{% url 'videopublishing:course_new' %}">New Course</a>
                   {% endif %}
               {% endfor %}
             </li>

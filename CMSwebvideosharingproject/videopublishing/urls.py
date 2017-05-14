@@ -11,4 +11,5 @@ urlpatterns = [
     url(r'^courses/(?P<course_pk>[0-9]+)/(?P<video_pk>[0-9]+)/$', views.video, name='video'),
     url(r'^courses/(?P<course_pk>[0-9]+)/(?P<video_pk>[0-9]+)/edit/$', views.video_edit, name='video_edit'),
     url(r'^courses/(?P<course_pk>[0-9]+)/(?P<video_pk>[0-9]+)/delete/$', views.video_delete, name='video_delete'),
+    #url(r'^search/',include('heystack.urls')),
 ]

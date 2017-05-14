@@ -1,7 +1,7 @@
 from django import forms
 from .models import Course_Create
 from .models import Videocreate
-
+from haystack.forms import SearchForm
 
 class CourseForm(forms.ModelForm):
 
@@ -15,3 +15,9 @@ class VideoForm(forms.ModelForm):
     class Meta:
         model = Videocreate
         fields = ('title', 'youtube_link', 'description',)
+
+
+#class NotesSearchForm(SearchForm):
+
+   # def no_query_found(self):
+      #  return self.searchqueryset.all()

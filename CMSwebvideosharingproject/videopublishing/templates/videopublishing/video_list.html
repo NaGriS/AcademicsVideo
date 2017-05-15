@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+{% include 'user_auth/logout.html' %}
+
+<head>
+    <meta charset="UTF-8">
+    <title>Video List</title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+	<link rel="stylesheet" type="text/css" href="/static/css/style.css">
+  <link rel="stylesheet" type="text/css" href="/static/css/bootstrap.css">
+  <link rel="stylesheet" type="text/css" href="/static/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="/static/css/bootstrap.theme.css">
+</head>
+<body>
+  <hr /><hr />
+  <div class="container">
+    {% for group in request.user.groups.all %}
+      {% if group.name == 'Professor' and request.user == course.author%}
+                <a class="btn btn-info" href="{% url 'videopublishing:course_edit' pk=course.pk %}">Edit</a>
+
+                <a class="btn btn-danger" href="{% url 'videopublishing:course_delete' course_pk=course.pk %}">Delete</a>
+        {% endif %}
+    {% endfor %}
+
+    {% for group in request.user.groups.all %}
+      {% if group.name == 'Professor' and request.user == course.author%}
+
+              <a class="btn btn-primary" href="{% url 'videopublishing:video_new' course.pk%}">New Video</a>
+
+        {% endif %}
+    {% endfor %}
+  </div>
+<hr>
+  <div class="container">
+    <div class="container">
+        <h1>{{ course.title }}</h1>
+        <p><h4>Description:</h4> <em>{{ course.description }}</em></p>
+        <p class="courseAuthor"><span class="glyphicon glyphicon-user"></span> <strong>Author:</strong> <em>{{ course.author }}</em></p>
+    </div>
+<hr>
+    {% for video in videos %}
+    <div class="container">
+      <span class="glyphicon glyphicon-time"></span> <span>Published: {{ video.pub_date }}</span>
+    </div>
+    <hr>
+        <div class="container">
+            <h1>
+              <a class="courseTitle" href="{% url 'videopublishing:video' course_pk=course.pk video_pk=video.pk %}">{{ video.title }}</a>
+            </h1>
+            <div class="col-md-6">
+              <iframe width="560" height="315" src="{{ video.youtube_link }}" frameborder="0" allowfullscreen></iframe>
+            </div>
+            <div class="col-md-6">
+              <p>{{ video.description|linebreaksbr }}</p>
+            </div>
+        </div>
+        <hr>
+    {% endfor %}
+  </div>
+</body>
+</html>

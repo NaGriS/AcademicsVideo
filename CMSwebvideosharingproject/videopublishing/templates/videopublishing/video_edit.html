@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+{% include 'user_auth/logout.html' %}
+
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+        <hr />
+        <div class="container">
+          <h1>New video</h1>
+          <form method="POST" role="form" class="post-form" >
+              {% csrf_token %}
+          <hr>
+            <label class="sr-only" for="inlineFormInput">Title</label>
+              <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                <div class="input-group-addon">Title</div>
+                <input name="title" type="text" class="form-control" id="inlineFormInputGroup1" placeholder="Type here"  value=  {% if form.instance.title %}
+                                                                                                                                            {{form.instance.title}}
+                                                                                                                                        {% endif %}>
+              </div>
+            <label class="sr-only" for="inlineFormInputGroup">Youtube link</label>
+              <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                <div class="input-group-addon">Youtube link</div>
+                <input name="youtube_link" type="text" class="form-control" id="inlineFormInputGroup2" placeholder="Type here"  value=  {% if form.instance.youtube_link %}
+                                                                                                                                            {{form.instance.youtube_link}}
+                                                                                                                                        {% endif %}>
+              </div>
+
+            <br>
+            <label for="description">Description:</label>
+            <textarea name="description" class="form-control" rows="5" id="description">{{ form.instance.description }}</textarea>
+              <button type="submit" class="save btn btn-default">Save</button>
+          </form>
+        </div>
+</body>
+</html>

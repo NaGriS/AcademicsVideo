@@ -177,8 +177,6 @@ HAYSTACK_CONNECTIONS = {
     },
   }
 
-
->>>>>>> development/Nikita_search
 if DEBUG:
     EMAIL_HOST = 'localhost'
     EMAIL_PORT = 1025

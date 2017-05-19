@@ -2,6 +2,7 @@ from django.db import models
 from django.utils import timezone
 from django.core.validators import URLValidator
 from django.core.exceptions import ValidationError
+from django.core.urlresolvers import reverse
 
 
 def validate_image_url(value):
@@ -50,6 +51,13 @@ class Videocreate(models.Model):
 
     def approved_comments(self):
         return self.comments.filter(approved_comment=True)
+    
+    #def get_absolute_url(self):
+    #    return reverse('video',
+    #                   kwargs={'video': self.course})
+    
+#    def get_absolute_url(self):
+#       return ( str(self.course), str(self.pk) )
 
 class Comment(models.Model):
     post = models.ForeignKey(Videocreate, related_name='comments')

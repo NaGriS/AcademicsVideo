@@ -14,6 +14,4 @@ urlpatterns = [
     url(r'^courses/(?P<course_pk>[0-9]+)/(?P<video_pk>[0-9]+)/edit/$', views.video_edit, name='video_edit'),
     url(r'^courses/(?P<course_pk>[0-9]+)/(?P<video_pk>[0-9]+)/delete/$', views.video_delete, name='video_delete'),
     url(r'^search/',include('haystack.urls')),
-    #url(r'^courses/(?P<pk>[0-9]+)/$',SearchView(), name='haystack_search'),
-    url(r'^courses/(?P<pk>[0-9]+)/',include('haystack.urls')),
 ]

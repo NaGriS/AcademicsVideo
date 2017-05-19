@@ -5,13 +5,13 @@ from videopublishing.models import Videocreate
 
 class VideocreateIndex(indexes.SearchIndex, indexes.Indexable):
      text = indexes.CharField(document=True, use_template=True)
-     title = indexes.CharField(model_attr='title') 
+     title = indexes.EdgeNgramField(model_attr='title')
+     description = indexes.EdgeNgramField(model_attr='description')
      pub_date = indexes.DateTimeField(model_attr='pub_date',null=True)
      #course = indexes.CharField()
      #youtube_link = indexes.CharField(model_attr='youtube_link')
      #description = indexes.CharField(model_attr='description')
      #description = indexes.TextField()
-     description = indexes.CharField(model_attr='description')
      #content_auto = indexes.EdgeNgramField(model_attr='title')
      
      def get_model(self):

@@ -8,6 +8,10 @@ from django.utils import timezone
 from django.shortcuts import get_object_or_404
 from django.http import  HttpResponse,HttpResponseRedirect
 
+from haystack.query import SearchQuerySet
+from django.shortcuts import render_to_response
+from .forms import NotesSearchForm
+
 # Create your views here.
 
 def video_list(request, pk):
@@ -205,12 +209,18 @@ def permission_validate_del_edit(request, author):
     return flag
 
 #def search_titles(request):
-    #video = SearchQuerySet().autocomplete(content_auto=request.POST.get('search_text',''))
-    #return render_to_response('ajax_search.hlml',{'video' : video})
+    #videos = SearchQuerySet().autocomplete(title=request.POST.get('q',''))
+    #return render_to_response('videopublishing:video_list.html',{'videos' : videos})
     #if request.method == "POST":
     #    search_text = request.POST['search_text']
     #else:
     #    search_text = ''
-    #articles = Article.object.filter(title__contains=search_text)
+    #videos = Videocreate.object.filter(title__contains=search_text)
     #articles = SearchQuerySet().autocomplete(content_auto=request.POST.get('search_text',''))    
-    #return render_to_response('ajax_search.hlml',{'articles' : articles})
+    #return render_to_response('videopublishing:video_list.html',{'videos' : videos})
+    
+def search_titles(request, course_pk, video_pk):
+    form = NotesSearchForm(request.GET)
+    videos = form.search()
+    return render_to_response('search/search.html', {'videos' : videos}, course_pk=course_pk, video_pk=video_pk)
+    

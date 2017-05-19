@@ -6,7 +6,9 @@
       <h3>Results</h3>
       {% for result in page.object_list %}
         <p>
-          <a href="{{ result.object.get_absolute_url }}">{{ result.object.title }}</a>
+            {% if result.object.get_cname == "video" %}
+                <a href="{% url 'videopublishing:video' course_pk=result.object.course.pk video_pk=result.object.pk %}">{{ result.object.title }}</a>
+            {% endif %}
         </p>
     {% empty %}
       <p>No results found.</p>

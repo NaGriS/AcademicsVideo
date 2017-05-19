@@ -7,7 +7,7 @@ class VideocreateIndex(indexes.SearchIndex, indexes.Indexable):
      text = indexes.CharField(document=True, use_template=True)
      title = indexes.CharField(model_attr='title') 
      pub_date = indexes.DateTimeField(model_attr='pub_date',null=True)
-     course = indexes.CharField()
+     #course = indexes.CharField()
      #youtube_link = indexes.CharField(model_attr='youtube_link')
      #description = indexes.CharField(model_attr='description')
      #description = indexes.TextField()

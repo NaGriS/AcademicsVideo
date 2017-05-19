@@ -1,6 +1,7 @@
 from django import forms
 from .models import Course_Create
 from .models import Videocreate,Comment
+from haystack.forms import SearchForm
 
 
 class CourseForm(forms.ModelForm):
@@ -25,7 +26,7 @@ class CommentForm(forms.ModelForm):
         model = Comment
         fields = ('comment',)
         
-#class NotesSearchForm(SearchForm):
+class NotesSearchForm(SearchForm):
 
-   # def no_query_found(self):
-      #  return self.searchqueryset.all()
+    def no_query_found(self):
+        return self.searchqueryset.all()

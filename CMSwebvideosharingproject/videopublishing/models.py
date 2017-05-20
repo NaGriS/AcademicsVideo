@@ -33,8 +33,8 @@ def validate_youtube_url(value):
         url_validator(value)
     except:
         raise ValidationError("Invalid URL for this field")
-    if "https://www.youtube.com/embed/" not in value:
-        raise ValidationError("Invalid URL: That doesn't contain \"https://www.youtube.com/embed/\"")
+    if ("https://www.youtube.com/" not in value) and ("https://youtu.be/" not in value):
+        raise ValidationError("Invalid URL: That doesn't contain \"https://www.youtube.com/\" or \"https://youtu.be/\"")
     return value
 
 

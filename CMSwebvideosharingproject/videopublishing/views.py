@@ -8,6 +8,10 @@ from django.utils import timezone
 from django.shortcuts import get_object_or_404
 from django.http import  HttpResponse,HttpResponseRedirect
 
+from haystack.query import SearchQuerySet
+from django.shortcuts import render_to_response
+from .forms import NotesSearchForm
+
 # Create your views here.
 
 def video_list(request, pk):
@@ -47,7 +51,8 @@ def course_new(request):
                 return redirect('videopublishing:video_list', pk=course.pk)
     else:
         form = CourseForm()
-    return render(request, 'videopublishing/course_edit.html', {'form': form})
+    titlestring = "New course"
+    return render(request, 'videopublishing/course_edit.html', {'form': form, 'titlestring': titlestring})
 
 
 def course_edit(request, pk):
@@ -72,7 +77,8 @@ def course_edit(request, pk):
             return redirect('videopublishing:video_list', pk=course.pk)
     else:
         form = CourseForm(instance=course)
-    return render(request, 'videopublishing/course_edit.html', {'form': form})
+    titlestring = "Edit course"
+    return render(request, 'videopublishing/course_edit.html', {'form': form, 'titlestring': titlestring})
 
 
 def video_new(request, pk):
@@ -90,13 +96,25 @@ def video_new(request, pk):
             form = VideoForm(request.POST)
             if form.is_valid():
                 video = form.save(commit=False)
+                length_link=len(video.youtube_link)
+                if video.youtube_link.find("watch", 0, length_link)!=-1:
+                    i=video.youtube_link.find("?v=", 0, length_link)+3
+                    s2=video.youtube_link[i:length_link:]
+                    s1="https://www.youtube.com/embed/"
+                    video.youtube_link=s1+s2
+                if video.youtube_link.find("youtu.be", 0, length_link)!=-1:
+                    i=video.youtube_link.find("youtu.be/", 0, length_link)+9
+                    s2=video.youtube_link[i:length_link:]
+                    s1="https://www.youtube.com/embed/"
+                    video.youtube_link=s1+s2
                 video.course_id = pk
                 video.pub_date = timezone.now()
                 video.save()
                 return redirect('videopublishing:video_list', pk)
     else:
         form = VideoForm()
-    return render(request, 'videopublishing/video_edit.html', {'form': form})
+    titlestring = "New video"
+    return render(request, 'videopublishing/video_edit.html', {'form': form, 'titlestring': titlestring})
 
 def video(request, course_pk, video_pk):
     # pemission to pages
@@ -138,13 +156,25 @@ def video_edit(request, course_pk, video_pk):
         form = VideoForm(request.POST, instance=video_d)
         if form.is_valid():
             video_d = form.save(commit=False)
+            length_link = len(video_d.youtube_link)
+            if video_d.youtube_link.find("watch", 0, length_link) != -1:
+                i = video_d.youtube_link.find("?v=", 0, length_link) + 3
+                s2 = video_d.youtube_link[i:length_link:]
+                s1 = "https://www.youtube.com/embed/"
+                video_d.youtube_link = s1 + s2
+            if video_d.youtube_link.find("youtu.be", 0, length_link) != -1:
+                i = video_d.youtube_link.find("youtu.be/", 0, length_link) + 9
+                s2 = video_d.youtube_link[i:length_link:]
+                s1 = "https://www.youtube.com/embed/"
+                video_d.youtube_link = s1 + s2
             video_d.course_id = course_pk
             video_d.pub_date = timezone.now()
             video_d.save()
             return redirect('videopublishing:video', course_pk=course_pk, video_pk=video_pk)
     else:
         form = VideoForm(instance=video_d)
-    return render(request, 'videopublishing/video_edit.html', {'form': form})
+    titlestring = "Edit video"
+    return render(request, 'videopublishing/video_edit.html', {'form': form, 'titlestring': titlestring})
 
 
 def video_delete(request, course_pk, video_pk):
@@ -205,12 +235,18 @@ def permission_validate_del_edit(request, author):
     return flag
 
 #def search_titles(request):
-    #video = SearchQuerySet().autocomplete(content_auto=request.POST.get('search_text',''))
-    #return render_to_response('ajax_search.hlml',{'video' : video})
+    #videos = SearchQuerySet().autocomplete(title=request.POST.get('q',''))
+    #return render_to_response('videopublishing:video_list.html',{'videos' : videos})
     #if request.method == "POST":
     #    search_text = request.POST['search_text']
     #else:
     #    search_text = ''
-    #articles = Article.object.filter(title__contains=search_text)
+    #videos = Videocreate.object.filter(title__contains=search_text)
     #articles = SearchQuerySet().autocomplete(content_auto=request.POST.get('search_text',''))    
-    #return render_to_response('ajax_search.hlml',{'articles' : articles})
+    #return render_to_response('videopublishing:video_list.html',{'videos' : videos})
+    
+def search_titles(request, course_pk, video_pk):
+    form = NotesSearchForm(request.GET)
+    videos = form.search()
+    return render_to_response('search/search.html', {'videos' : videos}, course_pk=course_pk, video_pk=video_pk)
+    

@@ -142,6 +142,8 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.messages',
     'registration',
+    'whoosh',
+    'haystack',
     'cms',
     'menus',
     'sekizai',
@@ -159,13 +161,13 @@ INSTALLED_APPS = (
     'djangocms_snippet',
     'djangocms_googlemap',
     'djangocms_video',
-    'webvideosharingproject',
     'parler',
     'aldryn_bootstrap3',
     'cmsplugin_auth_content',
+    'webvideosharingproject',
     'videopublishing',
-    'whoosh',
-    'haystack',
+    
+    
 )
 
 WHOOSH_INDEX = os.path.join(BASE_DIR,'whoosh/')
@@ -176,6 +178,7 @@ HAYSTACK_CONNECTIONS = {
       'PATH': WHOOSH_INDEX,
     },
   }
+
 
 if DEBUG:
     EMAIL_HOST = 'localhost'

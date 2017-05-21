@@ -45,19 +45,7 @@
               <a class="btn btn-primary" href="{% url 'videopublishing:video_new' course.pk%}">New Video</a>
 
         {% endif %}
-    {% endfor %}
-		
-		
-		
-		
-{% block content %}
-<h2>Search</h2>
-<form type="get" action="/search">
-    <input type="text" name="q">
-    <button type="submit">Search</button>
-</form>
-{% endblock content %}
-	
+    {% endfor %}	
 		
   </div>
 <hr>

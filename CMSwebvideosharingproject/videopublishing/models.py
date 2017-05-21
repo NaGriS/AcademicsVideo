@@ -25,6 +25,9 @@ class Course_Create(models.Model):
     def __str__(self):
         return self.title
 
+    def get_cname(self):
+        class_name = "course"
+        return class_name
 
 def validate_youtube_url(value):
     url_validator = URLValidator()
@@ -32,8 +35,8 @@ def validate_youtube_url(value):
         url_validator(value)
     except:
         raise ValidationError("Invalid URL for this field")
-    if "https://www.youtube.com/embed/" not in value:
-        raise ValidationError("Invalid URL: That doesn't contain \"https://www.youtube.com/embed/\"")
+    if ("https://www.youtube.com/" not in value) and ("https://youtu.be/" not in value):
+        raise ValidationError("Invalid URL: That doesn't contain \"https://www.youtube.com/\" or \"https://youtu.be/\"")
     return value
 
 def get_cname(self):
@@ -62,6 +65,16 @@ class Videocreate(models.Model):
     def get_cname(self):
         class_name = "video"
         return class_name
+    
+#    def get_absolute_url(self):
+#       return ( str(self.course), str(self.pk) )
+
+    def get_cname(self):
+        class_name = "video"
+        return class_name
+    #def get_absolute_url(self):
+    #    return reverse('video',
+    #                   kwargs={'video': self.course})
     
 #    def get_absolute_url(self):
 #       return ( str(self.course), str(self.pk) )

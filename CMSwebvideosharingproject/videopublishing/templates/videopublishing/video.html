@@ -2,11 +2,24 @@
 <html lang="en">
 
 {% include 'user_auth/logout.html' %}
-
+<style type="text/css">
+body {
+	
+}
+	.div1
+	{
+		margin-top: 2%;
+		margin-left: 10%;
+		margin-right: 10%;
+	}
+</style>
 
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
   <hr />
@@ -24,9 +37,13 @@
     </div>
     <hr />
     <div class="container">
-      <h1>{{ course.title }}</h1>
+      <h1>
+                    <a class="courseTitle" href="{% url 'videopublishing:video_list' pk=course.pk %}">{{ course.title }}</a>
+                  </h1>
       <hr />
-      <h2>{{ video_d.title }}</h2>
+      <h2>
+                    <a class="courseTitle" href="{% url 'videopublishing:video_list' pk=course.pk %}">{{ video_d.title }}</a>
+      </h2>
       <div class="col-md-6">
         <iframe width="560" height="315" src="{{ video_d.youtube_link }}" frameborder="0" allowfullscreen></iframe>
       </div>
@@ -36,29 +53,36 @@
         <hr>
 
     </div>
-
-  {% for comment in video_d.comments.all %}
+<div align="left" class="div1">
+<h1><font color="DodgerBlue ">C<i class="fa fa-comment-o" aria-hidden="true"></i>MMENTS</font></h1>
+  {% for comment in  video_d.comments.all %}
+    <form method="post">
+        {% csrf_token %}
     {% if user.is_authenticated or comment.approved_comment %}
     <div class="comment">
         <div class="date">
             {{ comment.created_date }}
         </div>
         <strong>{{ comment.author }}</strong>
+            <input type="hidden" name="comment_id" value="{{comment.id}}">
+
+           {% if  user.get_username == comment.author  or  user.get_username == course.author.username  %}
+            <button name="delete" value="delete" type="submit" class="save btn btn-danger"><i class="fa fa-trash"></i></button> 
+            {%endif%}
+
         <p>{{ comment.comment|linebreaks }}</p>
     </div>
+    </form>
     {% endif %}
 {% empty %}
     <p>No comments here yet :(</p>
 {% endfor %}
-
-     <h1>New comment</h1>
+<div class="col-md-4">
+     <h1><font color="DodgerBlue ">New <i class="fa fa-comments" aria-hidden="true"></i></font></h1>
     <form method="POST" class="post-form" role="form">
         {% csrf_token %}
-
-         <label for="description">New comment:</label>
             <textarea name="comment" class="form-control" rows="5" id="comment"></textarea>
-      <button type="submit" class="save btn btn-default">Send</button>
+      <button name="send" value="send" type="submit" class="save btn btn-info">Send</button>
     </form>
-
 </body>
 </html>

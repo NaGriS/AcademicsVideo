@@ -8,7 +8,7 @@ class VideocreateIndex(indexes.SearchIndex, indexes.Indexable):
      title = indexes.EdgeNgramField(model_attr='title')
      description = indexes.EdgeNgramField(model_attr='description')
      pub_date = indexes.DateTimeField(model_attr='pub_date',null=True)
-     course = indexes.CharField()
+     #course = indexes.CharField()
      #youtube_link = indexes.CharField(model_attr='youtube_link')
      #description = indexes.CharField(model_attr='description')
      #description = indexes.TextField()

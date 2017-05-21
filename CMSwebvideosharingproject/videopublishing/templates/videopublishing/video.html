@@ -64,8 +64,6 @@ body {
     <div class="comment">
         <div class="date">
             {{ comment.created_date }}
-            {{course.author}}
-            {{user.get_username}}
         </div>
         <strong>{{ comment.author }}</strong>
             <input type="hidden" name="comment_id" value="{{comment.id}}">

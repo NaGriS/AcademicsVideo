@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-
 {% include 'user_auth/logout.html' %}
-
 
 <head>
     <meta charset="UTF-8">
@@ -22,6 +20,14 @@
   <link rel="stylesheet" type="text/css" href="/static/css/bootstrap.theme.css">
 </head>
 <body>
+{% block content %}
+<h2>Search</h2>
+<form type="get" action="/search">
+    <input type="text" name="q">
+    <button type="submit">Search</button>
+</form>
+{% endblock content %}
+
   <hr /><hr />
   <div class="container">
     {% for group in request.user.groups.all %}
@@ -39,23 +45,12 @@
 
         {% endif %}
     {% endfor %}
-		
-		
-		
-		
-{% block content %}
-<h2>Search</h2>
-<form type="get" action="/search">
-    <input type="text" name="q">
-    <button type="submit">Search</button>
-</form>
-{% endblock content %}
-		
   </div>
 <hr>
   <div class="container">
     <div class="container">
-        <h1>{{ course.title }}</h1>
+        <h1>
+<a class="courseTitle" href="{% url 'videopublishing:video_list' pk=course.pk %}">{{ course.title }}</a></h1>
         <p><h4>Description:</h4> <em>{{ course.description }}</em></p>
         <p class="courseAuthor"><span class="glyphicon glyphicon-user"></span> <strong>Author:</strong> <em>{{ course.author }}</em></p>
     </div>

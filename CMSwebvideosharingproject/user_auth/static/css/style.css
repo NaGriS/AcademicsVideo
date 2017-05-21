@@ -6,7 +6,11 @@
 }
 .courseTitle:link, .courseTitle:visited {
   text-decoration: none;
-  color: green;
+  color: #1E90FF;
+}
+.courseTitle:link, .courseTitle:visited {
+  text-decoration: none;
+  color: #1E90FF;
   text-align: center;
 }
 .courseTitle:hover, courseTitle:active {
@@ -17,7 +21,8 @@
 }
 .navbar-inverse .navbar-nav>li>a {
   color: #fff !important;
-  margin-right: 5px;
+  margin-right: 17px;
+  margin-top: 3px;
 }
 body {
   background-image: url('../../static/img/bg.png');

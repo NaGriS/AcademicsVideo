@@ -1,2 +1,3 @@
 {{ object.title }}
+{{ object.course.title }}
 {{ object.description }}

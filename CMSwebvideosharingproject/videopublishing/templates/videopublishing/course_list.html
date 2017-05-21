@@ -43,6 +43,17 @@
             </div>
           {% endif %}
       {% endfor %} -->
+	  
+	  
+{% block content %}
+<h2>Search</h2>
+<form type="get" action="/search">
+    <input type="text" name="q">
+    <button type="submit">Search</button>
+</form>
+{% endblock content %}
+
+
     </div>
     <hr />
     <div class="row">

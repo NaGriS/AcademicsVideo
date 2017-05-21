@@ -7,10 +7,6 @@
 .courseTitle:link, .courseTitle:visited {
   text-decoration: none;
   color: #1E90FF;
-}
-.courseTitle:link, .courseTitle:visited {
-  text-decoration: none;
-  color: #1E90FF;
   text-align: center;
 }
 .courseTitle:hover, courseTitle:active {

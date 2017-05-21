@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import Course_Create
+from .models import Course_Create,Comment
 from .models import Videocreate
 from .forms import CourseForm
 from .forms import VideoForm,CommentForm
@@ -124,19 +124,28 @@ def video(request, course_pk, video_pk):
     course = get_object_or_404(Course_Create, pk=course_pk)
     video_d = get_object_or_404(Videocreate, pk=video_pk)
 
+    # comment
+    # if 'q' in request.get:
+    #   comment_d=get_object_or_404(Comment,pk=request.get['q'])
     post = get_object_or_404(Videocreate, pk=video_pk)
     if request.method == "POST":
-        form = CommentForm(data=request.POST)
-        if form.is_valid():
-            comment = form.save(commit=False)
-            comment.post = post
-            comment.author=request.user
-            comment.save()
+        if 'send' in request.POST.getlist('send'):
+            form = CommentForm(data=request.POST)
+            if form.is_valid():
+                comment = form.save(commit=False)
+                comment.post = post
+                comment.author = request.user
+                comment.save()
+                return redirect('videopublishing:video', course_pk=course_pk, video_pk=video_pk)
+        elif 'delete' in request.POST.getlist('delete'):
+            # comment_d.delete()
+            comment_id = int(request.POST.get('comment_id'))
+            comment = Comment.objects.get(id=comment_id)
+            comment.delete()
             return redirect('videopublishing:video', course_pk=course_pk, video_pk=video_pk)
     else:
         form = CommentForm()
-    return render(request, 'videopublishing/video.html', {'video_d': video_d, 'course': course,'form':form})
-
+    return render(request, 'videopublishing/video.html', {'video_d': video_d, 'course': course, 'form': form})
 
 def video_edit(request, course_pk, video_pk):
     # pemission to pages

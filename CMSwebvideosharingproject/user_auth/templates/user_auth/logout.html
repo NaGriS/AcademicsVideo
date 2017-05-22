@@ -19,8 +19,8 @@
     <button onclick="myFunction()" class="dropbtn">Welcome {{ user.get_username }}</button>
     <div id="myDropdown" class="dropdown-content">
       {% if user.is_authenticated %}
-<a class="btn btn" href="{% url 'user_auth:change_password' %}">change password</a>
-  <a href="/logout_user/" class="btn btn">logout</a>
+<a class="btn btn" href="{% url 'user_auth:change_password' %}">Change password</a>
+  <a href="/logout_user/" class="btn btn">Logout</a>
         {% endif %}
 
 

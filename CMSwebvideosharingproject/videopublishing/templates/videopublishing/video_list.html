@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
-{% include 'user_auth/logout.html' %}
 
+{% include 'user_auth/logout.html' %}
 
 <head>
     <meta charset="UTF-8">
@@ -21,13 +21,6 @@
   <link rel="stylesheet" type="text/css" href="/static/css/bootstrap.theme.css">
 </head>
 <body>
-{% block content %}
-<h2>Search</h2>
-<form type="get" action="/search">
-    <input type="text" name="q">
-    <button type="submit">Search</button>
-</form>
-{% endblock content %}
 
   <hr /><hr />
   <div class="container">
@@ -45,8 +38,7 @@
               <a class="btn btn-primary" href="{% url 'videopublishing:video_new' course.pk%}">New Video</a>
 
         {% endif %}
-    {% endfor %}	
-		
+    {% endfor %}
   </div>
 <hr>
   <div class="container">

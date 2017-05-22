@@ -11,8 +11,6 @@ def validate_image_url(value):
         url_validator(value)
     except:
         raise ValidationError("Invalid URL for this field")
-    
-    
 
 
 class Course_Create(models.Model):
@@ -39,10 +37,6 @@ def validate_youtube_url(value):
         raise ValidationError("Invalid URL: That doesn't contain \"https://www.youtube.com/\" or \"https://youtu.be/\"")
     return value
 
-def get_cname(self):
-        class_name = "course"
-        return class_name
-
 
 class Videocreate(models.Model):
     course = models.ForeignKey(Course_Create)
@@ -60,14 +54,6 @@ class Videocreate(models.Model):
 
     def approved_comments(self):
         return self.comments.filter(approved_comment=True)
-    
-    
-    def get_cname(self):
-        class_name = "video"
-        return class_name
-    
-#    def get_absolute_url(self):
-#       return ( str(self.course), str(self.pk) )
 
     def get_cname(self):
         class_name = "video"

@@ -43,7 +43,7 @@ body {
       <hr />
       <h2>
                     <a class="courseTitle" href="{% url 'videopublishing:video_list' pk=course.pk %}">{{ video_d.title }}</a>
-      </h2>
+                  </h2>
       <div class="col-md-6">
         <iframe width="560" height="315" src="{{ video_d.youtube_link }}" frameborder="0" allowfullscreen></iframe>
       </div>
@@ -55,6 +55,8 @@ body {
     </div>
 <div align="left" class="div1">
 <h1><font color="DodgerBlue ">C<i class="fa fa-comment-o" aria-hidden="true"></i>MMENTS</font></h1>
+
+
   {% for comment in  video_d.comments.all %}
     <form method="post">
         {% csrf_token %}
@@ -73,6 +75,7 @@ body {
         <p>{{ comment.comment|linebreaks }}</p>
     </div>
     </form>
+
     {% endif %}
 {% empty %}
     <p>No comments here yet :(</p>
@@ -81,8 +84,11 @@ body {
      <h1><font color="DodgerBlue ">New <i class="fa fa-comments" aria-hidden="true"></i></font></h1>
     <form method="POST" class="post-form" role="form">
         {% csrf_token %}
+
+         
             <textarea name="comment" class="form-control" rows="5" id="comment"></textarea>
       <button name="send" value="send" type="submit" class="save btn btn-info">Send</button>
     </form>
+
 </body>
 </html>

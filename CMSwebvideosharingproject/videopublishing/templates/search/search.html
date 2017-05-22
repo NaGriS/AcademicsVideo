@@ -1,0 +1,16 @@
+<h2>Search</h2>
+<form type="get" action="/search">
+    <input type="text" name="q">
+    <button type="submit">Search</button>
+</form>
+      <h3>Results</h3>
+      {% for result in page.object_list %}
+        <p>
+            {% if result.object.get_cname == "video" %}
+                <a href="{% url 'videopublishing:video' course_pk=result.object.course.pk video_pk=result.object.pk %}">{{ result.object.title }}</a>
+            {% endif %}
+        </p>
+    {% empty %}
+      <p>No results found.</p>
+    {% endfor %}
+</form>

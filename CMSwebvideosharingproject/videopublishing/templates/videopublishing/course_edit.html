@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+{% include 'user_auth/logout.html' %}
+
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/style.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/bootstrap.theme.css">
+</head>
+<body>
+    <hr />
+    <div class="container">
+      <h1>{{ titlestring }}</h1>
+        <hr>
+          <form method="post" role="form" class="post-form">
+              {% csrf_token %}
+            <label class="sr-only" for="inlineFormInput">Title</label>
+              {% for error in form.title.errors %}
+                    <div class="alert alert-danger">
+                        <strong>{{ error|escape }}</strong>
+                    </div>
+              {% endfor %}
+              <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                <div class="input-group-addon">Title</div>
+                <input name="title" type="text" class="form-control" id="inlineFormInputGroup1" placeholder="Type here" value={{ form.instance.title }}>
+              </div>
+            <label class="sr-only" for="inlineFormInputGroup">Years of Study</label>
+              {% for error in form.year_of_study.errors %}
+                    <div class="alert alert-danger">
+                        <strong>{{ error|escape }}</strong>
+                    </div>
+              {% endfor %}
+              <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                <div class="input-group-addon">Years of Study</div>
+                <input name="year_of_study" type="text" class="form-control" id="inlineFormInputGroup2" placeholder="Type here" value=  {% if form.instance.year_of_study %}
+                                                                                                                                            {{form.instance.year_of_study}}
+                                                                                                                                        {% endif %}>
+              </div>
+            <label class="sr-only" for="inlineFormInputGroup">Image of Course</label>
+              {% for error in form.image_of_course.errors %}
+                    <div class="alert alert-danger">
+                        <strong>{{ error|escape }}</strong>
+                    </div>
+              {% endfor %}
+              <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                <div class="input-group-addon">Image of Course</div>
+                <input name="image_of_course" type="text" class="form-control" id="inlineFormInputGroup3" placeholder="Type here" value={% if form.instance.image_of_course %}
+                                                                                                                                            {{form.instance.image_of_course}}
+                                                                                                                                        {% endif %}>
+              </div>
+          <br>
+
+            <label for="description">Description:</label>
+              {% for error in form.description.errors %}
+                    <div class="alert alert-danger">
+                        <strong>{{ error|escape }}</strong>
+                    </div>
+              {% endfor %}
+            <textarea name="description" class="form-control" rows="5" id="description">{{ form.instance.description }}</textarea>
+              <button type="submit" class="save btn btn-default">Save</button>
+          </form>
+    </div>
+</body>
+</html>

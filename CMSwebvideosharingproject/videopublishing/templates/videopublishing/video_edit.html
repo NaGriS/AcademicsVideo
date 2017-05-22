@@ -16,11 +16,6 @@
               {% csrf_token %}
           <hr>
             <label class="sr-only" for="inlineFormInput">Title</label>
-              {% for error in form.title.errors %}
-                    <div class="alert alert-danger">
-                        <strong>{{ error|escape }}</strong>
-                    </div>
-              {% endfor %}
               <div class="input-group mb-2 mr-sm-2 mb-sm-0">
                 <div class="input-group-addon">Title</div>
                 <input name="title" type="text" class="form-control" id="inlineFormInputGroup1" placeholder="Type here"  value=  {% if form.instance.title %}
@@ -28,11 +23,6 @@
                                                                                                                                         {% endif %}>
               </div>
             <label class="sr-only" for="inlineFormInputGroup">Youtube link</label>
-              {% for error in form.youtube_link.errors %}
-                    <div class="alert alert-danger">
-                        <strong>{{ error|escape }}</strong>
-                    </div>
-              {% endfor %}
               <div class="input-group mb-2 mr-sm-2 mb-sm-0">
                 <div class="input-group-addon">Youtube link</div>
                 <input name="youtube_link" type="text" class="form-control" id="inlineFormInputGroup2" placeholder="Type here"  value=  {% if form.instance.youtube_link %}
@@ -42,11 +32,6 @@
 
             <br>
             <label for="description">Description:</label>
-              {% for error in form.description.errors %}
-                    <div class="alert alert-danger">
-                        <strong>{{ error|escape }}</strong>
-                    </div>
-              {% endfor %}
             <textarea name="description" class="form-control" rows="5" id="description">{{ form.instance.description }}</textarea>
               <button type="submit" class="save btn btn-default">Save</button>
           </form>

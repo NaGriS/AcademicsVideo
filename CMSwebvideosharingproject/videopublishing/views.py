@@ -243,7 +243,6 @@ def permission_validate_del_edit(request, author):
             flag = 1
     return flag
 
-
 #def search_titles(request):
     #videos = SearchQuerySet().autocomplete(title=request.POST.get('q',''))
     #return render_to_response('videopublishing:video_list.html',{'videos' : videos})
@@ -255,8 +254,8 @@ def permission_validate_del_edit(request, author):
     #articles = SearchQuerySet().autocomplete(content_auto=request.POST.get('search_text',''))    
     #return render_to_response('videopublishing:video_list.html',{'videos' : videos})
     
-#def search_titles(request, course_pk, video_pk):
-    #form = NotesSearchForm(request.GET)
-   # videos = form.search()
-  #  return render_to_response('search/search.html', {'videos' : videos}, course_pk=course_pk, video_pk=video_pk)
+def search_titles(request, course_pk, video_pk):
+    form = NotesSearchForm(request.GET)
+    videos = form.search()
+    return render_to_response('search/search.html', {'videos' : videos}, course_pk=course_pk, video_pk=video_pk)
     

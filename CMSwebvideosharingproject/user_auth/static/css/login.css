@@ -25,7 +25,7 @@ background-size: cover;
 	transition: all 0.1s linear;
 }
 .panel-login>.panel-heading a.active{
-	color: #029f5b;
+	color: #59B2E0;
 	font-size: 18px;
 }
 .panel-login>.panel-heading hr{

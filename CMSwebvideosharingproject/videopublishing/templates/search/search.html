@@ -37,8 +37,7 @@ background-image: url('../../static/img/bg.png');
                 <a href="{% url 'videopublishing:video' course_pk=result.object.course.pk video_pk=result.object.pk %}">{{ result.object.title }}</a>
 <br>
 <br>
-
- <div>
+                <div>
                     <iframe width="560" height="315" src="{{ result.object.youtube_link }}" frameborder="0" allowfullscreen></iframe>
                 </div>
 

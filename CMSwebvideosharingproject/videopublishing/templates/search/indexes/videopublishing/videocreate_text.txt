@@ -1,0 +1,6 @@
+{{ object.title }}
+{{ object.course.title }}
+{{ object.course.author }}
+{{ object.course.year_of_study }}
+{{ object.description }}
+{{ object.pub_date }}

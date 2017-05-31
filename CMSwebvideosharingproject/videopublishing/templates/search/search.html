@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<style type="text/css">
+body {
+	
+background-image: url('../../static/img/bg.png');
+
+}
+	.div1
+	{
+		margin-top: 1%;
+		margin-left: 10%;
+		margin-right: 10%;
+	}
+
+</style>
+<head>
+    <link rel="stylesheet" type="text/css" href="/static/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/bootstrap.theme.css">
+<link rel="stylesheet" href="/static/css/search.css">
+</head>
+<body>
+<div align="center" class="div1">
+<form type="get" action="/search">
+    <input type="text" name="q" placeholder="Search...">
+    <button type="submit" class="save btn btn-info">Submit</button>
+</form>
+<br>
+
+      <b><h1><font color="DodgerBlue ">Results</h1></b>
+<br>
+<br>
+      {% for result in page.object_list %}
+        <h4><p>
+            {% if result.object.get_cname == "video" %}
+                <a href="{% url 'videopublishing:video' course_pk=result.object.course.pk video_pk=result.object.pk %}">{{ result.object.title }}</a>
+<br>
+<br>
+                <div>
+                    <iframe width="560" height="315" src="{{ result.object.youtube_link }}" frameborder="0" allowfullscreen></iframe>
+                </div>
+
+                <div>
+                    <p>{{ result.object.description|linebreaksbr }}</p>
+                </div>
+            {% endif %}
+        </p><h4>
+    {% empty %}
+      <p>No results found.</p>
+    {% endfor %}
+</form>
+</body>
+</html>

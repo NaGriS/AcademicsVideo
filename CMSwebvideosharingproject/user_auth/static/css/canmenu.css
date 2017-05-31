@@ -1,0 +1,35 @@
+.tak {
+  border: 2px solid #ccc;
+  background-color: #eee;
+  border-radius: 5px;
+  padding: 16px;
+  margin: 16px 0
+}
+
+.tak::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+.tak img {
+  float: left;
+  margin-right: 20px;
+  border-radius: 50%;
+}
+
+.tak span {
+  font-size: 20px;
+  margin-right: 15px;
+}
+
+@media (max-width: 500px) {
+  .tak {
+      text-align: center;
+  }
+  .tak img {
+      margin: auto;
+      float: none;
+      display: block;
+  }
+}
